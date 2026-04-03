@@ -1,5 +1,5 @@
 name: Deploy to Hostinger
-
+# Ce script se déclenche à chaque fois que vous faites un "push" sur la branche "main"
 on:
   push:
     branches:

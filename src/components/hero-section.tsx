@@ -27,7 +27,8 @@ export function HeroSection() {
             L&apos;intelligence des donnees. L&apos;excellence sur le terrain.
           </h1>
           <p className="max-w-2xl text-lg leading-8 text-zinc-300 sm:text-xl">
-            De la conception algorithmique a la livraison finale, nous redefinissons la realisation de travaux grace a l&apos;IA.
+            De la conception algorithmique a la livraison finale, nous
+            redefinissons la realisation de travaux grace a l&apos;IA. SDDDDAAAA
           </p>
         </div>
 
