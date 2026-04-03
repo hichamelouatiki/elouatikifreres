@@ -21,7 +21,7 @@ jobs:
           # On prend tout ce qui est DANS ton dossier out local
           local-dir: ./out/
           # Chemin exact vu sur ton FileZilla
-          server-dir: ./domains/elouatikifreres.com/public_html/
+          server-dir: /domains/elouatikifreres.com/public_html/
           # On ne supprime pas les fichiers distants pour éviter les erreurs de droits
           dangerous-clean-slate: false
           # Option pour ignorer les erreurs de certificats SSL si besoin
