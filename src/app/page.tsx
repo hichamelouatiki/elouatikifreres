@@ -3,10 +3,14 @@ import { ContactSection } from "@/components/contact-section";
 import { HeroSection } from "@/components/hero-section";
 import { MethodSection } from "@/components/method-section";
 import { MethodologySection } from "@/components/methodology-section";
-import { ProjectsSection } from "@/components/projects-section";
+import { RealisationsSection } from "@/components/realisations-section";
 import { SiteFooter } from "@/components/site-footer";
 import { StorySection } from "@/components/story-section";
 
+/**
+ * Page d’accueil fusionnée : flux de l’ancienne version (consulting, histoire,
+ * méthodologie, contact) + hero / méthode / Bento / footer de la nouvelle.
+ */
 export default function Home() {
   return (
     <main className="overflow-x-hidden bg-zinc-950">
@@ -17,7 +21,7 @@ export default function Home() {
       <div id="methodologie">
         <MethodologySection />
       </div>
-      <ProjectsSection />
+      <RealisationsSection />
       <ContactSection />
       <SiteFooter />
     </main>

@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 
 export function ContactSection() {
   return (
-    <section className="px-6 py-24 sm:px-8 lg:px-12">
+    <section id="contact" className="scroll-mt-24 px-6 py-24 sm:px-8 lg:px-12">
       <div className="mx-auto grid max-w-7xl gap-8 rounded-[36px] border border-white/10 bg-white/5 p-8 backdrop-blur-md lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
         <div className="space-y-5">
           <p className="text-sm font-medium uppercase tracking-[0.24em] text-cyan-400">
