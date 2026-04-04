@@ -5,7 +5,7 @@ import { MethodSection } from "@/components/method-section";
 import { MethodologySection } from "@/components/methodology-section";
 import { RealisationsSection } from "@/components/realisations-section";
 import { SiteFooter } from "@/components/site-footer";
-import { StorySection } from "@/components/story-section";
+import { OurStorySection } from "@/components/our-story-section";
 
 /**
  * Page d’accueil fusionnée : flux de l’ancienne version (consulting, histoire,
@@ -17,7 +17,7 @@ export default function Home() {
       <HeroSection />
       <MethodSection />
       <ConsultingSection />
-      <StorySection />
+      <OurStorySection />
       <div id="methodologie">
         <MethodologySection />
       </div>

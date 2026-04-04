@@ -2,74 +2,45 @@
 
 import { Mail, MapPin, Phone } from "lucide-react";
 
-import { Button } from "@/components/ui/button";
+import { ContactLeadForm } from "@/components/contact-lead-form";
 
 export function ContactSection() {
   return (
-    <section id="contact" className="scroll-mt-24 px-6 py-24 sm:px-8 lg:px-12">
-      <div className="mx-auto grid max-w-7xl gap-8 rounded-[36px] border border-white/10 bg-white/5 p-8 backdrop-blur-md lg:grid-cols-[0.9fr_1.1fr] lg:p-10">
-        <div className="space-y-5">
+    <section id="contact" className="scroll-mt-24 px-5 py-20 sm:px-8 sm:py-24 lg:px-12">
+      <div className="mx-auto grid max-w-7xl gap-10 lg:grid-cols-[minmax(0,1fr)_minmax(0,1.15fr)] lg:items-start lg:gap-12 xl:gap-16">
+        <div className="space-y-5 lg:sticky lg:top-28">
           <p className="text-sm font-medium uppercase tracking-[0.24em] text-cyan-400">
             Contact Projet
           </p>
-          <h2 className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold text-white">
+          <h2 className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold text-white sm:text-4xl">
             Simulez votre chantier et recevez un premier cadrage.
           </h2>
-          <p className="leading-8 text-zinc-400">
-            Le formulaire reste 100% statique et peut etre connecte a Web3Forms en renseignant la cle publique dans `.env.local`.
+          <p className="leading-relaxed text-zinc-400">
+            Prêt à transformer l&apos;exécution de vos chantiers ? Décrivez-nous votre projet en
+            quelques lignes et obtenez une première simulation et un cadrage stratégique de la part de
+            nos experts.
           </p>
-          <div className="space-y-4 text-zinc-300">
+          <div className="space-y-4 border-t border-white/10 pt-6 text-zinc-300">
             <div className="flex items-center gap-3">
-              <Mail className="size-5 text-cyan-400" />
-              <span>contact@elouatikifreres.com</span>
+              <Mail className="size-5 shrink-0 text-cyan-400" aria-hidden />
+              <a href="mailto:contact@elouatikifreres.com" className="transition hover:text-white">
+                contact@elouatikifreres.com
+              </a>
             </div>
             <div className="flex items-center gap-3">
-              <Phone className="size-5 text-orange-400" />
-              <span>+212 6 00 00 00 00</span>
+              <Phone className="size-5 shrink-0 text-orange-400" aria-hidden />
+              <a href="tel:+212766738969" className="transition hover:text-white">
+                +212 7 66 73 89 69
+              </a>
             </div>
             <div className="flex items-center gap-3">
-              <MapPin className="size-5 text-green-400" />
+              <MapPin className="size-5 shrink-0 text-green-400" aria-hidden />
               <span>Maroc · Interventions nationales</span>
             </div>
           </div>
         </div>
 
-        <form
-          action="https://api.web3forms.com/submit"
-          method="POST"
-          className="grid gap-4"
-        >
-          <input
-            type="hidden"
-            name="access_key"
-            value={process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? ""}
-          />
-          <input type="hidden" name="subject" value="Nouvelle demande projet Elouatikifreres" />
-          <input
-            type="text"
-            name="name"
-            placeholder="Nom et prenom"
-            className="h-12 rounded-2xl border border-white/10 bg-zinc-950 px-4 text-white outline-none placeholder:text-zinc-500"
-            required
-          />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email professionnel"
-            className="h-12 rounded-2xl border border-white/10 bg-zinc-950 px-4 text-white outline-none placeholder:text-zinc-500"
-            required
-          />
-          <textarea
-            name="message"
-            placeholder="Decrivez rapidement votre chantier, vos objectifs et vos contraintes."
-            rows={6}
-            className="rounded-3xl border border-white/10 bg-zinc-950 px-4 py-3 text-white outline-none placeholder:text-zinc-500"
-            required
-          />
-          <Button type="submit" size="lg" className="w-full sm:w-fit">
-            Envoyer ma demande
-          </Button>
-        </form>
+        <ContactLeadForm />
       </div>
     </section>
   );

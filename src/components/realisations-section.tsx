@@ -55,9 +55,27 @@ export function RealisationsSection() {
           <BentoCell
             index={1}
             gridClassName="lg:[grid-column:3/5] lg:[grid-row:1/3]"
-            visual
-            visualLabel="Projet tour logistique — visuel à remplacer par photo"
-          />
+            visual={false}
+          >
+            <div>
+              <p className="text-xs font-medium uppercase tracking-[0.2em] text-zinc-500">
+                Cas client
+              </p>
+              <h3 className="mt-3 font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-white sm:text-3xl">
+                Tour logistique augmentée
+              </h3>
+            </div>
+            <p className="max-w-xl text-sm leading-relaxed text-zinc-300 sm:text-base">
+              Déploiement d&apos;une solution de suivi par vision par ordinateur permettant de
+              réduire les temps d&apos;inactivité de 25% et de fluidifier les accès logistiques des
+              sous-traitants.
+            </p>
+            <div
+              className="mt-6 min-h-[120px] flex-1 rounded-2xl bg-gradient-to-br from-zinc-800 via-zinc-900 to-zinc-950 ring-1 ring-inset ring-white/5"
+              role="img"
+              aria-label="Visuel projet tour logistique — photo à venir"
+            />
+          </BentoCell>
 
           <BentoCell
             index={2}

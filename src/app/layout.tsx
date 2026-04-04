@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Caveat, Inter, Space_Grotesk } from "next/font/google";
 import "./globals.css";
 
 const inter = Inter({
@@ -9,6 +9,11 @@ const inter = Inter({
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
+  subsets: ["latin"],
+});
+
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
 });
 
@@ -26,7 +31,7 @@ export default function RootLayout({
   return (
     <html
       lang="fr"
-      className={`${inter.variable} ${spaceGrotesk.variable} h-full scroll-smooth antialiased`}
+      className={`${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full scroll-smooth antialiased`}
     >
       <body className="min-h-full flex flex-col">{children}</body>
     </html>

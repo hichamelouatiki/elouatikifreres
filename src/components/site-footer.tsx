@@ -41,8 +41,8 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a href="tel:+33100000000" className="transition-colors hover:text-white">
-                  +33 1 00 00 00 00
+                <a href="tel:+212766738969" className="transition-colors hover:text-white">
+                  +212 7 66 73 89 69
                 </a>
               </li>
             </ul>
