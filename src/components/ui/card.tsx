@@ -1,5 +1,6 @@
 import * as React from "react";
 
+import { NeutralAmpersandText, textHasAmpersandJoin } from "@/components/neutral-ampersand-text";
 import { cn } from "@/lib/utils";
 
 function Card({
@@ -26,8 +27,16 @@ function CardHeader({
 
 function CardTitle({
   className,
+  children,
   ...props
 }: React.HTMLAttributes<HTMLHeadingElement>) {
+  const content =
+    typeof children === "string" && textHasAmpersandJoin(children) ? (
+      <NeutralAmpersandText text={children} />
+    ) : (
+      children
+    );
+
   return (
     <h3
       className={cn(
@@ -35,7 +44,9 @@ function CardTitle({
         className,
       )}
       {...props}
-    />
+    >
+      {content}
+    </h3>
   );
 }
 

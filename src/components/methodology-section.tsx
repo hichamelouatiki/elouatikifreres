@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 
+import { NeutralAmpersandText } from "@/components/neutral-ampersand-text";
 import { Button } from "@/components/ui/button";
 
 const steps = [
@@ -57,7 +58,7 @@ export function MethodologySection() {
                 </div>
                 <div className="rounded-[28px] border border-white/10 bg-white/5 p-6 backdrop-blur-md">
                   <h3 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold text-white">
-                    {step.title}
+                    <NeutralAmpersandText text={step.title} />
                   </h3>
                   <p className="mt-3 leading-7 text-zinc-400">{step.description}</p>
                 </div>

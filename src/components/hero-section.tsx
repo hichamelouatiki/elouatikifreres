@@ -8,6 +8,7 @@
 import { ArrowRight } from "lucide-react";
 
 import { FadeUp } from "@/components/fade-up";
+import { SiteLogo } from "@/components/site-logo";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -38,7 +39,11 @@ export function HeroSection() {
 
       <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-9 sm:gap-11 lg:gap-12">
         <FadeUp delay={0}>
-          <div className="max-w-5xl">
+          <div className="max-w-5xl space-y-8">
+            <SiteLogo
+              priority
+              className="max-h-56 w-auto sm:max-h-64 md:max-h-[18rem]"
+            />
             <h1 className="text-balance font-[family-name:var(--font-space-grotesk)] text-4xl font-bold leading-[1.06] tracking-tight text-white drop-shadow-[0_0_60px_rgba(34,211,238,0.08)] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.25rem]">
               L&apos;intelligence des données.{" "}
               <span className="bg-gradient-to-r from-white via-zinc-100 to-cyan-200/95 bg-clip-text text-transparent">

@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import { Caveat, Inter, Space_Grotesk } from "next/font/google";
+
+import { SITE_LOGO_INTRINSIC, SITE_LOGO_SRC } from "@/components/site-logo";
+import { SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -19,8 +22,30 @@ const caveat = Caveat({
 
 export const metadata: Metadata = {
   title: "Elouatikifreres | IA & Travaux BTP",
-  description:
-    "Site vitrine premium d'Elouatikifreres, entre intelligence artificielle, pilotage data et excellence terrain.",
+  description: SITE_DESCRIPTION,
+  openGraph: {
+    title: "Elouatikifreres | IA & Travaux BTP",
+    description: SITE_DESCRIPTION,
+    locale: "fr_FR",
+    type: "website",
+    images: [
+      {
+        url: SITE_LOGO_SRC,
+        width: SITE_LOGO_INTRINSIC.width,
+        height: SITE_LOGO_INTRINSIC.height,
+        alt: "El Ouatiki Frères",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Elouatikifreres | IA & Travaux BTP",
+    description: SITE_DESCRIPTION,
+    images: [SITE_LOGO_SRC],
+  },
+  icons: {
+    icon: SITE_LOGO_SRC,
+  },
 };
 
 export default function RootLayout({

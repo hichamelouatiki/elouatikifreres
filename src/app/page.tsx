@@ -6,6 +6,7 @@ import { MethodologySection } from "@/components/methodology-section";
 import { RealisationsSection } from "@/components/realisations-section";
 import { SiteFooter } from "@/components/site-footer";
 import { OurStorySection } from "@/components/our-story-section";
+import { PartnerCarousel } from "@/components/partner-carousel";
 
 /**
  * Page d’accueil fusionnée : flux de l’ancienne version (consulting, histoire,
@@ -22,6 +23,7 @@ export default function Home() {
         <MethodologySection />
       </div>
       <RealisationsSection />
+      <PartnerCarousel />
       <ContactSection />
       <SiteFooter />
     </main>

@@ -1,26 +1,17 @@
 /**
- * Pied de page minimal : marque stylisée, contacts, mentions légales.
+ * Pied de page minimal : logo, description officielle, contacts, mentions légales.
  */
+
+import { SiteLogo } from "@/components/site-logo";
+import { SITE_DESCRIPTION } from "@/lib/site";
 
 export function SiteFooter() {
   return (
     <footer className="border-t border-white/10 px-5 py-12 sm:px-8 lg:px-12">
       <div className="mx-auto flex max-w-7xl flex-col gap-10 md:flex-row md:items-start md:justify-between">
-        {/* Logo textuel stylisé */}
-        <div className="space-y-2">
-          <p
-            className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold tracking-tight"
-            aria-label="Elouatikifreres"
-          >
-            <span className="bg-gradient-to-r from-cyan-300 via-white to-orange-300 bg-clip-text text-transparent">
-              elouati
-            </span>
-            <span className="text-white">kifreres</span>
-          </p>
-          <p className="max-w-xs text-sm leading-relaxed text-zinc-500">
-            IA, BIM, pilotage data et exécution BTP — intelligence artificielle au service du
-            terrain.
-          </p>
+        <div className="space-y-4">
+          <SiteLogo className="max-h-96 w-auto opacity-95" />
+          <p className="max-w-md text-sm leading-relaxed text-zinc-500">{SITE_DESCRIPTION}</p>
         </div>
 
         <nav

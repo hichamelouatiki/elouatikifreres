@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ArrowRight, Cog, SearchCheck, Users } from "lucide-react";
 
+import { NeutralAmpersandText } from "@/components/neutral-ampersand-text";
 import { Button } from "@/components/ui/button";
 
 const pillars = [
@@ -36,7 +37,7 @@ export function ConsultingSection() {
         >
           <div className="space-y-4">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500">
-              Consulting & Transformation Digitale
+              <NeutralAmpersandText text="Consulting & Transformation Digitale" />
             </p>
             <h2 className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold sm:text-5xl">
               L&apos;humain avant la machine, pour des transformations qui tiennent dans le temps.
