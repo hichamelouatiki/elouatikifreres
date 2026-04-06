@@ -6,9 +6,9 @@
  * retour progressif au gris en sortant de la fenêtre).
  */
 
-import { useLayoutEffect, useRef, useState } from "react";
+import { Fragment, useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { motion, useAnimationFrame } from "framer-motion";
+import { motion, useAnimationFrame, useReducedMotion } from "framer-motion";
 
 import { PARTNER_LOGOS, type PartnerLogo } from "@/data/partner-logos";
 import { cn } from "@/lib/utils";
@@ -80,15 +80,21 @@ function LogoRow({
 
 export function PartnerCarousel({ className }: { className?: string }) {
   const logos = PARTNER_LOGOS;
+  const logosCount = logos.length;
   const count = logos.length * 2;
   const cellRefs = useRef<(HTMLDivElement | null)[]>([]);
 
   const rowRef = useRef<HTMLDivElement>(null);
   const [loopWidth, setLoopWidth] = useState(0);
+  const [activeLogoIndex, setActiveLogoIndex] = useState<number>(0);
+  const lastActiveIndexRef = useRef<number>(-1);
 
-  const setRefAt = (index: number, el: HTMLDivElement | null) => {
+  const setRefAt = useCallback((index: number, el: HTMLDivElement | null) => {
     cellRefs.current[index] = el;
-  };
+  }, []);
+
+  const reduceMotion = useReducedMotion();
+  const lastPaintMsRef = useRef<number>(0);
 
   useLayoutEffect(() => {
     const el = rowRef.current;
@@ -106,12 +112,20 @@ export function PartnerCarousel({ className }: { className?: string }) {
     };
   }, [logos]);
 
-  useAnimationFrame(() => {
+  useAnimationFrame((t) => {
+    // Réduit le coût: pas besoin de repeindre à 60fps pour un simple filtre.
+    if (t - lastPaintMsRef.current < 33) return; // ~30fps
+    lastPaintMsRef.current = t;
+
     const refs = cellRefs.current;
     if (!refs.length) return;
 
     const vw = window.innerWidth;
     const cx = vw / 2;
+
+    // 1) Trouver le logo le plus proche du centre
+    let bestIndex = -1;
+    let bestDist = Number.POSITIVE_INFINITY;
 
     for (let i = 0; i < count; i++) {
       const el = refs[i];
@@ -119,12 +133,43 @@ export function PartnerCarousel({ className }: { className?: string }) {
       const r = el.getBoundingClientRect();
       const logoCx = r.left + r.width / 2;
       const dist = Math.abs(logoCx - cx);
-      const g = grayscaleForCenterWindow(dist, vw);
-      el.style.filter = `grayscale(${g}%)`;
+      if (dist < bestDist) {
+        bestDist = dist;
+        bestIndex = i;
+      }
+    }
+
+    if (bestIndex < 0) return;
+
+    // Mettre à jour l’index actif (sans rerender à chaque frame)
+    const logicalIndex = logosCount > 0 ? bestIndex % logosCount : 0;
+    if (logicalIndex !== lastActiveIndexRef.current) {
+      lastActiveIndexRef.current = logicalIndex;
+      setActiveLogoIndex(logicalIndex);
+    }
+
+    // 2) Appliquer: un seul logo en couleur (fenêtre centrée), tous les autres en N&B
+    for (let i = 0; i < count; i++) {
+      const el = refs[i];
+      if (!el) continue;
+      if (i !== bestIndex) {
+        el.style.filter = "grayscale(100%)";
+        continue;
+      }
+      el.style.filter = `grayscale(${grayscaleForCenterWindow(bestDist, vw)}%)`;
     }
   });
 
   const duration = loopWidth > 0 ? Math.max(28, loopWidth / 45) : 0;
+  const activeAlt = useMemo(() => logos[activeLogoIndex]?.alt ?? "", [logos, activeLogoIndex]);
+  const activeAltLines = useMemo(() => {
+    // Règle demandée : quand on trouve " - ", on passe à la ligne.
+    // On gère aussi les séparateurs typographiques fréquents.
+    return activeAlt
+      .split(/\s(?:-|—|–)\s/g)
+      .map((s) => s.trim())
+      .filter(Boolean);
+  }, [activeAlt]);
 
   return (
     <section
@@ -160,9 +205,9 @@ export function PartnerCarousel({ className }: { className?: string }) {
         >
           <motion.div
             className="flex w-max will-change-transform"
-            animate={loopWidth > 0 ? { x: [0, -loopWidth] } : { x: 0 }}
+            animate={reduceMotion || loopWidth <= 0 ? { x: 0 } : { x: [0, -loopWidth] }}
             transition={
-              loopWidth > 0
+              !reduceMotion && loopWidth > 0
                 ? {
                     duration,
                     repeat: Infinity,
@@ -179,6 +224,20 @@ export function PartnerCarousel({ className }: { className?: string }) {
             </div>
           </motion.div>
         </div>
+
+        {activeAltLines.length ? (
+          <p
+            className="mt-5 text-center text-sm text-zinc-500"
+            aria-live="polite"
+          >
+            {activeAltLines.map((line, idx) => (
+              <Fragment key={`${idx}-${line.slice(0, 16)}`}>
+                {idx > 0 ? <br /> : null}
+                {line}
+              </Fragment>
+            ))}
+          </p>
+        ) : null}
       </div>
     </section>
   );

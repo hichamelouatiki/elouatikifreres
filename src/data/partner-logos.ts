@@ -11,7 +11,7 @@ export type PartnerLogo = {
 export const PARTNER_LOGOS: PartnerLogo[] = [
   {
     src: "/media/Partener/JESA (Jacobs Engineering SA).png",
-    alt: "le plus grand groupe d'ingénierie au Maroc",
+    alt: "le plus grand Groupe d'ingénierie au Maroc",
   },
   {
     src: "/media/Partener/ocp-group.svg",
@@ -21,5 +21,36 @@ export const PARTNER_LOGOS: PartnerLogo[] = [
     src: "/media/Partener/veolia-transport.svg",
     alt: "Veolia Transport — mobilité et services",
   },
-
+  {
+    src: "/media/Partener/ministere-interieur.png",
+    alt: "Ministère de l’Intérieur — Royaume du Maroc",
+  },
+  {
+    src: "/media/Partener/ministere-habous-affaires-islamiques.png",
+    alt: "Ministère des Habous et des Affaires Islamiques — Royaume du Maroc",
+  },
+  {
+    src: "/media/Partener/ministere-sante-maroc.png",
+    alt: "Ministère de la Santé — Royaume du Maroc",
+  },
+  {
+    src: "/media/Partener/anep-maroc.png",
+    alt: "ANEP Maroc — Agence Nationale des Équipements Publics",
+  },
+  {
+    src: "/media/Partener/agence-regionale-execution-projets.png",
+    alt: "AREP (MAROC) — Agence Régionale d’Exécution des Projets",
+  },
+  {
+    src: "/media/Partener/apdn.jpg",
+    alt: "APDN — Agence pour la Promotion et le Développement du Nord",
+  },
+  {
+    src: "/media/Partener/offpt.png",
+    alt: "OFPPT — Office de la Formation Professionnelle et — de la Promotion du Travail",
+  },
+  {
+    src: "/media/Partener/lasamir.jpg",
+    alt: "LASAMIR Maroc — Raffinerie de Mohammédia",
+  },
 ];
