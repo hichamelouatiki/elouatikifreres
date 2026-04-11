@@ -141,7 +141,7 @@ export function MethodSection() {
   return (
     <section
       id="notre-methode"
-      className="scroll-mt-24 px-5 py-20 sm:px-8 sm:py-24 lg:px-12"
+      className="scroll-mt-24 px-5 pb-20 pt-4 sm:px-8 sm:pb-24 sm:pt-6 lg:px-12 lg:pt-8"
       aria-labelledby="titre-notre-methode"
     >
       <div className="mx-auto flex max-w-7xl flex-col gap-12 lg:gap-14">

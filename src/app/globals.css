@@ -16,6 +16,8 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-space-grotesk);
+  /* Aligné sur le header : « bureau » = largeur viewport ≥ 1024px (ex. 1024×720) */
+  --breakpoint-lg: 64rem;
 }
 
 * {

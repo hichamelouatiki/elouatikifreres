@@ -26,7 +26,10 @@ const pillars = [
 
 export function ConsultingSection() {
   return (
-    <section className="light-grid-pattern bg-zinc-50 px-6 py-24 text-zinc-950 sm:px-8 lg:px-12">
+    <section
+      id="consulting"
+      className="light-grid-pattern scroll-mt-24 bg-zinc-50 px-6 py-24 text-zinc-950 sm:px-8 lg:px-12"
+    >
       <div className="mx-auto grid max-w-7xl gap-12 lg:grid-cols-[1.05fr_0.95fr] lg:items-center">
         <motion.div
           initial={{ opacity: 0, y: 30 }}

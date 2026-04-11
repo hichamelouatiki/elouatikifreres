@@ -3,12 +3,25 @@ import Image from "next/image";
 import { cn } from "@/lib/utils";
 
 /**
- * Source canonique : `media/Logo/logo.png` — copie déployée dans `public/images/logo.png`.
+ * Logo principal (header, footer, favicon / OG via `layout.tsx`).
+ * Fichier attendu : `public/images/logo_header.png`.
  */
-export const SITE_LOGO_SRC = "/images/logo.png";
+export const SITE_LOGO_SRC = "/images/logo_header.png";
 
-/** Dimensions intrinsèques du PNG (pour `next/image` et métadonnées OG). */
-export const SITE_LOGO_INTRINSIC = { width: 862, height: 669 } as const;
+/** Dimensions réelles du fichier PNG (métadonnées OG / ratio de référence). */
+export const SITE_LOGO_INTRINSIC = { width: 402, height: 413 } as const;
+
+/** Taille d’affichage header : hauteur inférieure à la barre `h-16` (64px) pour éviter rognage / débordement. */
+export const SITE_LOGO_HEADER_DISPLAY = {
+  height: 48,
+  width: Math.round((48 * SITE_LOGO_INTRINSIC.width) / SITE_LOGO_INTRINSIC.height),
+} as const;
+
+/** Footer : un peu plus grand que le header, toujours en dimensions explicites. */
+export const SITE_LOGO_FOOTER_DISPLAY = {
+  width: 160,
+  height: Math.round((160 * SITE_LOGO_INTRINSIC.height) / SITE_LOGO_INTRINSIC.width),
+} as const;
 
 type SiteLogoProps = {
   className?: string;
@@ -29,7 +42,8 @@ export function SiteLogo({
       alt="El Ouatiki Frères — logo"
       width={width}
       height={height}
-      className={cn("h-auto w-auto object-contain", className)}
+      sizes={`${width}px`}
+      className={cn("block max-h-full w-auto shrink-0 object-contain object-left", className)}
       priority={priority}
     />
   );

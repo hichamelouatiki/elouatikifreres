@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Caveat, Inter, Space_Grotesk } from "next/font/google";
 
 import { SITE_LOGO_INTRINSIC, SITE_LOGO_SRC } from "@/components/site-logo";
+import { SiteHeader } from "@/components/site-header";
 import { SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
@@ -21,6 +22,7 @@ const caveat = Caveat({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://elouatikifreres.com"),
   title: "Elouatikifreres | IA & Travaux BTP",
   description: SITE_DESCRIPTION,
   openGraph: {
@@ -58,7 +60,10 @@ export default function RootLayout({
       lang="fr"
       className={`${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col">{children}</body>
+      <body className="min-h-full flex flex-col">
+        <SiteHeader />
+        <div className="flex flex-1 flex-col pt-16">{children}</div>
+      </body>
     </html>
   );
 }

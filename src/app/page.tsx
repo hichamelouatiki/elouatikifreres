@@ -19,7 +19,7 @@ export default function Home() {
       <MethodSection />
       <ConsultingSection />
       <OurStorySection />
-      <div id="methodologie">
+      <div id="methodologie" className="scroll-mt-24">
         <MethodologySection />
       </div>
       <RealisationsSection />

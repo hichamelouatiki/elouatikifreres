@@ -241,11 +241,6 @@ export function ContactLeadForm() {
 
   return (
     <div className="rounded-2xl border border-zinc-800 bg-zinc-950 p-6 shadow-2xl sm:p-8 md:p-10">
-      <h3 className="mb-2 text-3xl font-bold text-white">Parlez-nous de votre projet</h3>
-      <p className="mb-8 text-zinc-400">
-        Remplissez ce formulaire pour obtenir une simulation et un cadrage stratégique.
-      </p>
-
       <form
         acceptCharset="utf-8"
         encType="multipart/form-data"

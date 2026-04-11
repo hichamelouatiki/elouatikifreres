@@ -2,7 +2,7 @@
  * Fat footer : marque, solutions, entreprise, contact + fine print.
  */
 
-import { SiteLogo } from "@/components/site-logo";
+import { SiteLogo, SITE_LOGO_FOOTER_DISPLAY } from "@/components/site-logo";
 import {
   Camera,
   Link,
@@ -19,7 +19,11 @@ export function SiteFooter() {
         <div className="grid gap-12 lg:grid-cols-4 lg:gap-10">
           {/* Colonne 1 : Identité */}
           <div className="space-y-5">
-            <SiteLogo className="max-h-16 w-auto opacity-90 grayscale contrast-125 brightness-125" />
+            <SiteLogo
+              width={SITE_LOGO_FOOTER_DISPLAY.width}
+              height={SITE_LOGO_FOOTER_DISPLAY.height}
+              className="opacity-90 grayscale contrast-125 brightness-125"
+            />
             <p className="max-w-sm text-sm leading-relaxed text-zinc-400">
               Elouatiki Frères : L&apos;alliance de l&apos;expertise constructive et de
               l&apos;intelligence prédictive.
@@ -122,14 +126,14 @@ export function SiteFooter() {
                 <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-cyan-300/90">
                   <MapPin className="size-4" aria-hidden />
                 </span>
-                <span>179 LOT KAMILA, ROUTE D'AGOURAI, 50000 MEKNES, MAROC</span>
+                <span>179 LOT KAMILA, ROUTE D&apos;AGOURAI, 50000 MEKNES, MAROC</span>
               </li>
               <li className="flex gap-3">
                 <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-orange-200/90">
                   <Phone className="size-4" aria-hidden />
                 </span>
                 <a className="transition hover:text-white" href="tel:+212766738969">
-                +212766738969
+                  +212766738969
                 </a>
               </li>
               <li className="flex gap-3">

@@ -27,7 +27,7 @@ const textBlock = {
 export function OurStorySection() {
   return (
     <section
-      id="notre-histoire"
+      id="histoire"
       className="w-full scroll-mt-24 bg-zinc-950 px-5 py-20 sm:px-8 sm:py-24 lg:px-12"
       aria-labelledby="titre-notre-histoire"
     >
@@ -45,7 +45,7 @@ export function OurStorySection() {
               src={STORY_IMAGE_SRC}
               alt="Deux associés sur un chantier, casques de sécurité, consultation d&apos;un plan sur tablette — expertise terrain et numérique"
               fill
-              className="object-cover grayscale transition-all duration-700 ease-out hover:grayscale-0"
+              className="object-cover grayscale-0 transition-all duration-700 ease-out lg:grayscale lg:hover:grayscale-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
               unoptimized
             />
