@@ -43,7 +43,10 @@ export function SiteLogo({
       width={width}
       height={height}
       sizes={`${width}px`}
-      className={cn("block max-h-full w-auto shrink-0 object-contain object-left", className)}
+      className={cn(
+        "block h-auto max-h-full w-auto max-w-full shrink-0 object-contain object-left",
+        className,
+      )}
       priority={priority}
     />
   );

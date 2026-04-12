@@ -4,53 +4,54 @@
  * Les entrées « fictives » partagent parfois un fichier réel en attendant vos visuels définitifs.
  */
 export type PartnerLogo = {
+  /** Clé pour `Partners.alt.{id}` dans les fichiers de messages. */
+  id: string;
   src: string;
-  alt: string;
 };
 
 export const PARTNER_LOGOS: PartnerLogo[] = [
   {
+    id: "jesa",
     src: "/media/Partener/JESA (Jacobs Engineering SA).png",
-    alt: "le plus grand Groupe d'ingénierie au Maroc",
   },
   {
+    id: "ocp",
     src: "/media/Partener/ocp-group.svg",
-    alt: "OCP Group — groupe minier et industriel",
   },
   {
+    id: "veolia",
     src: "/media/Partener/veolia-transport.svg",
-    alt: "Veolia Transport — mobilité et services",
   },
   {
+    id: "interieur",
     src: "/media/Partener/ministere-interieur.png",
-    alt: "Ministère de l’Intérieur — Royaume du Maroc",
   },
   {
+    id: "habous",
     src: "/media/Partener/ministere-habous-affaires-islamiques.png",
-    alt: "Ministère des Habous et des Affaires Islamiques — Royaume du Maroc",
   },
   {
+    id: "sante",
     src: "/media/Partener/ministere-sante-maroc.png",
-    alt: "Ministère de la Santé — Royaume du Maroc",
   },
   {
+    id: "anep",
     src: "/media/Partener/anep-maroc.png",
-    alt: "ANEP Maroc — Agence Nationale des Équipements Publics",
   },
   {
+    id: "arep",
     src: "/media/Partener/agence-regionale-execution-projets.png",
-    alt: "AREP (MAROC) — Agence Régionale d’Exécution des Projets",
   },
   {
+    id: "apdn",
     src: "/media/Partener/apdn.jpg",
-    alt: "APDN — Agence pour la Promotion et le Développement du Nord",
   },
   {
+    id: "ofppt",
     src: "/media/Partener/offpt.png",
-    alt: "OFPPT — Office de la Formation Professionnelle et — de la Promotion du Travail",
   },
   {
+    id: "lasamir",
     src: "/media/Partener/lasamir.jpg",
-    alt: "LASAMIR Maroc — Raffinerie de Mohammédia",
   },
 ];

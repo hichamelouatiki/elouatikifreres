@@ -2,29 +2,20 @@
 
 import { motion } from "framer-motion";
 import { ArrowRight, Cog, SearchCheck, Users } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { NeutralAmpersandText } from "@/components/neutral-ampersand-text";
 import { Button } from "@/components/ui/button";
 
-const pillars = [
-  {
-    icon: SearchCheck,
-    title: "Audit Operationnel",
-    text: "Nous partons des frictions du terrain avant de parler outils, automatisation ou dashboards.",
-  },
-  {
-    icon: Cog,
-    title: "Deploiement Sur-Mesure",
-    text: "Chaque brique digitale est calibree autour de vos lots, contraintes et cycles de validation.",
-  },
-  {
-    icon: Users,
-    title: "Conduite du Changement",
-    text: "Les equipes adoptent mieux les solutions quand elles servent d&apos;abord l&apos;execution quotidienne.",
-  },
-];
-
 export function ConsultingSection() {
+  const t = useTranslations("Consulting");
+
+  const pillars = [
+    { icon: SearchCheck, title: t("pillar1Title"), text: t("pillar1Text") },
+    { icon: Cog, title: t("pillar2Title"), text: t("pillar2Text") },
+    { icon: Users, title: t("pillar3Title"), text: t("pillar3Text") },
+  ];
+
   return (
     <section
       id="consulting"
@@ -40,10 +31,10 @@ export function ConsultingSection() {
         >
           <div className="space-y-4">
             <p className="text-sm font-semibold uppercase tracking-[0.24em] text-orange-500">
-              <NeutralAmpersandText text="Consulting & Transformation Digitale" />
+              <NeutralAmpersandText text={t("eyebrow")} />
             </p>
             <h2 className="font-[family-name:var(--font-space-grotesk)] text-4xl font-bold sm:text-5xl">
-              L&apos;humain avant la machine, pour des transformations qui tiennent dans le temps.
+              {t("title")}
             </h2>
           </div>
 
@@ -52,7 +43,10 @@ export function ConsultingSection() {
               const Icon = pillar.icon;
 
               return (
-                <div key={pillar.title} className="rounded-[24px] border border-zinc-200 bg-white/85 p-5 shadow-lg shadow-zinc-200/60">
+                <div
+                  key={pillar.title}
+                  className="rounded-[24px] border border-zinc-200 bg-white/85 p-5 shadow-lg shadow-zinc-200/60"
+                >
                   <div className="mb-3 inline-flex size-12 items-center justify-center rounded-2xl bg-orange-100 text-orange-500">
                     <Icon className="size-5" />
                   </div>
@@ -64,7 +58,7 @@ export function ConsultingSection() {
           </div>
 
           <Button variant="dark" size="lg">
-            Reserver mon Audit
+            {t("ctaAudit")}
             <ArrowRight className="size-4" />
           </Button>
         </motion.div>
@@ -79,11 +73,9 @@ export function ConsultingSection() {
           <div className="aspect-[4/3] overflow-hidden rounded-[32px] bg-[radial-gradient(circle_at_top_left,rgba(249,115,22,0.35),transparent_30%),linear-gradient(135deg,#0f172a,#27272a_45%,#52525b)] shadow-xl shadow-zinc-400/20" />
           <div className="absolute bottom-6 left-6 max-w-xs rounded-3xl border border-white/40 bg-white/75 p-5 backdrop-blur-md">
             <p className="text-sm font-semibold uppercase tracking-[0.18em] text-orange-500">
-              Point d&apos;alerte
+              {t("alertEyebrow")}
             </p>
-            <p className="mt-2 text-lg font-medium text-zinc-950">
-              70% des transformations digitales echouent faute d&apos;ancrage operationnel.
-            </p>
+            <p className="mt-2 text-lg font-medium text-zinc-950">{t("alertBody")}</p>
           </div>
         </motion.div>
       </div>

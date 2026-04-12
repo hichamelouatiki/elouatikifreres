@@ -15,6 +15,7 @@ import {
   FolderKanban,
   X,
 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { BimFeatureCard } from "@/components/bim-feature-card";
 import { FadeUp } from "@/components/fade-up";
@@ -36,73 +37,6 @@ type DrawerConfig = {
   icon: ComponentType<{ className?: string }>;
   cta: string;
 };
-
-const features: DrawerConfig[] = [
-  {
-    id: "bim",
-    eyebrow: "Notre méthode",
-    title: "Conception Intelligente & BIM",
-    description:
-      "Maquette numérique, détection de conflits et arbitrages data dès la conception pour sécuriser coûts et délais.",
-    header: "Simulateur Clash Detection",
-    accent: "default",
-    stats: [
-      { value: "−15%", label: "dépassement budget" },
-      { value: "100%", label: "conflits résolus" },
-      { value: "0", label: "jour de retard" },
-    ],
-    icon: Blocks,
-    cta: "Lancer la simulation BIM",
-  },
-  {
-    id: "logistics",
-    eyebrow: "Notre méthode",
-    title: "Pilotage & Logistique Data",
-    description:
-      "Ordonnancement fin, flux matériaux et synchronisation des équipes pilotés par la donnée chantier en temps réel.",
-    header: "Gantt animé",
-    accent: "orange",
-    stats: [
-      { value: "−30%", label: "coûts de stockage" },
-      { value: "+20%", label: "productivité" },
-      { value: "0", label: "temps mort" },
-    ],
-    icon: BarChart3,
-    cta: "Optimiser ma logistique",
-  },
-  {
-    id: "tracking",
-    eyebrow: "Notre méthode",
-    title: "Réalisation Connectée & Suivi 360°",
-    description:
-      "Capteurs, reporting automatisé et indicateurs terrain pour une visibilité complète sur l’exécution.",
-    header: "Computer Vision",
-    accent: "default",
-    stats: [
-      { value: "100%", label: "traçabilité" },
-      { value: "−40%", label: "reporting manuel" },
-      { value: "0", label: "défaut sécurité" },
-    ],
-    icon: Camera,
-    cta: "Activer le suivi 360°",
-  },
-  {
-    id: "management",
-    eyebrow: "Notre méthode",
-    title: "Livraison & Jumeau Numérique",
-    description:
-      "Réception, DOE numérique et jumeau d’exploitation pour prolonger la valeur de l’ouvrage après livraison.",
-    header: "Courbe financière",
-    accent: "green",
-    stats: [
-      { value: "+21%", label: "rentabilité" },
-      { value: "+31%", label: "productivité" },
-      { value: "0", label: "papier" },
-    ],
-    icon: FolderKanban,
-    cta: "Structurer ma livraison",
-  },
-];
 
 function accentClasses(accent: DrawerConfig["accent"]) {
   if (accent === "orange") {
@@ -132,10 +66,79 @@ function accentClasses(accent: DrawerConfig["accent"]) {
 }
 
 export function MethodSection() {
+  const tM = useTranslations("Method");
+  const tF = useTranslations("Features");
+
+  const features: DrawerConfig[] = useMemo(
+    () => [
+      {
+        id: "bim",
+        eyebrow: tM("eyebrow"),
+        title: tF("bim.cardTitle"),
+        description: tF("bim.cardDesc"),
+        header: tF("bim.drawerTitle"),
+        accent: "default",
+        stats: [
+          { value: "−15%", label: tF("bim.s1l") },
+          { value: "100%", label: tF("bim.s2l") },
+          { value: "0", label: tF("bim.s3l") },
+        ],
+        icon: Blocks,
+        cta: tM("genericCtaBim"),
+      },
+      {
+        id: "logistics",
+        eyebrow: tM("eyebrow"),
+        title: tF("logistics.cardTitle"),
+        description: tF("logistics.cardDesc"),
+        header: tF("logistics.drawerTitle"),
+        accent: "orange",
+        stats: [
+          { value: "−30%", label: tF("logistics.s1l") },
+          { value: "+20%", label: tF("logistics.s2l") },
+          { value: "0", label: tF("logistics.s3l") },
+        ],
+        icon: BarChart3,
+        cta: tM("genericCtaLogistics"),
+      },
+      {
+        id: "tracking",
+        eyebrow: tM("eyebrow"),
+        title: tF("tracking.cardTitle"),
+        description: tF("tracking.cardDesc"),
+        header: tF("tracking.drawerTitle"),
+        accent: "default",
+        stats: [
+          { value: "100%", label: tF("tracking.s1l") },
+          { value: "−40%", label: tF("tracking.s2l") },
+          { value: "0", label: tF("tracking.s3l") },
+        ],
+        icon: Camera,
+        cta: tM("genericCtaTracking"),
+      },
+      {
+        id: "management",
+        eyebrow: tM("eyebrow"),
+        title: tF("management.cardTitle"),
+        description: tF("management.cardDesc"),
+        header: tF("management.drawerTitle"),
+        accent: "green",
+        stats: [
+          { value: "+21%", label: tF("management.s1l") },
+          { value: "+31%", label: tF("management.s2l") },
+          { value: "0", label: tF("management.s3l") },
+        ],
+        icon: FolderKanban,
+        cta: tM("genericCtaManagement"),
+      },
+    ],
+    [tM, tF],
+  );
+
   const [activeId, setActiveId] = useState<string | null>(null);
   const activeFeature = useMemo(
     () => features.find((feature) => feature.id === activeId) ?? null,
-    [activeId],
+    [features, activeId],
   );
 
   return (
@@ -147,18 +150,15 @@ export function MethodSection() {
       <div className="mx-auto flex max-w-7xl flex-col gap-12 lg:gap-14">
         <FadeUp inView className="max-w-4xl space-y-4">
           <p className="text-sm font-medium uppercase tracking-[0.24em] text-cyan-400">
-            Notre méthode
+            {tM("eyebrow")}
           </p>
           <h2
             id="titre-notre-methode"
             className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl"
           >
-            Du Bit au Béton : L&apos;Intelligence au Cœur du Chantier
+            {tM("title")}
           </h2>
-          <p className="text-base leading-relaxed text-zinc-400 sm:text-lg">
-            Chaque carte ouvre un niveau de détail : indicateurs, usage opérationnel et valeur
-            directe sur la rentabilité terrain — le processus elouatikifreres de bout en bout.
-          </p>
+          <p className="text-base leading-relaxed text-zinc-400 sm:text-lg">{tM("subtitle")}</p>
         </FadeUp>
 
         <ul className="grid list-none grid-cols-1 gap-5 sm:gap-6 md:grid-cols-2">
@@ -249,7 +249,7 @@ export function MethodSection() {
                         <CardDescription>{feature.description}</CardDescription>
                       </CardHeader>
                       <CardContent className="flex items-center justify-between px-0 pb-0">
-                        <span className="text-sm text-zinc-500">Ouvrir le détail</span>
+                        <span className="text-sm text-zinc-500">{tM("openDetail")}</span>
                         <ChevronRight
                           className={cn("size-5 transition-transform group-hover:translate-x-1", accent.text)}
                           aria-hidden
@@ -273,7 +273,7 @@ export function MethodSection() {
           <>
             <motion.button
               type="button"
-              aria-label="Fermer le panneau"
+              aria-label={tM("closePanelAria")}
               className="fixed inset-0 z-40 bg-black/50 backdrop-blur-md"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -332,7 +332,7 @@ export function MethodSection() {
                           : "bg-cyan-400",
                     )}
                   />
-                  <span className="text-sm text-zinc-400">Visualisation opérationnelle</span>
+                  <span className="text-sm text-zinc-400">{tM("operationalViz")}</span>
                 </div>
                 <div className="space-y-4">
                   {[55, 82, 68, 92].map((width, i) => (

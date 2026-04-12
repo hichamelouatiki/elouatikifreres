@@ -6,12 +6,15 @@
  */
 
 import { ArrowRight } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { FadeUp } from "@/components/fade-up";
 import { buttonVariants } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
 export function HeroSection() {
+  const t = useTranslations("Hero");
+
   return (
     <section
       className={cn(
@@ -40,9 +43,9 @@ export function HeroSection() {
         <FadeUp delay={0}>
           <div className="max-w-5xl">
             <h1 className="text-balance font-[family-name:var(--font-space-grotesk)] text-4xl font-bold leading-[1.06] tracking-tight text-white drop-shadow-[0_0_60px_rgba(34,211,238,0.08)] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.25rem]">
-              L&apos;intelligence des données.{" "}
+              {t("titleLine1")}{" "}
               <span className="bg-gradient-to-r from-white via-zinc-100 to-cyan-200/95 bg-clip-text text-transparent">
-                L&apos;excellence sur le terrain.
+                {t("titleLine2")}
               </span>
             </h1>
           </div>
@@ -50,8 +53,7 @@ export function HeroSection() {
 
         <FadeUp delay={0.1}>
           <p className="max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed">
-            De la conception algorithmique à la livraison finale, nous redéfinissons la réalisation
-            de travaux avec rigueur data et exécution terrain irréprochable.
+            {t("subtitle")}
           </p>
         </FadeUp>
 
@@ -64,7 +66,7 @@ export function HeroSection() {
                 "w-full justify-center shadow-[0_0_0_1px_rgba(34,211,238,0.15)] sm:w-auto",
               )}
             >
-              Simuler mon projet
+              {t("ctaProject")}
               <ArrowRight className="size-4 shrink-0" aria-hidden />
             </a>
             <a
@@ -74,7 +76,7 @@ export function HeroSection() {
                 "w-full border-white/12 bg-white/[0.04] justify-center backdrop-blur-sm sm:w-auto",
               )}
             >
-              Découvrir notre méthode
+              {t("ctaMethod")}
             </a>
           </div>
         </FadeUp>

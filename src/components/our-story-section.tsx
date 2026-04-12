@@ -7,6 +7,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 /** Fichier servi depuis /public/images/ (copie de media/Histoire_elouatiki_freres.png). */
 const STORY_IMAGE_SRC = "/images/Histoire_elouatiki_freres.png";
@@ -25,6 +26,8 @@ const textBlock = {
 };
 
 export function OurStorySection() {
+  const t = useTranslations("Story");
+
   return (
     <section
       id="histoire"
@@ -43,7 +46,7 @@ export function OurStorySection() {
           <div className="relative aspect-[4/5] w-full overflow-hidden rounded-2xl border border-white/10 bg-zinc-900 shadow-2xl shadow-black/40">
             <Image
               src={STORY_IMAGE_SRC}
-              alt="Deux associés sur un chantier, casques de sécurité, consultation d&apos;un plan sur tablette — expertise terrain et numérique"
+              alt={t("imageAlt")}
               fill
               className="object-cover grayscale-0 transition-all duration-700 ease-out lg:grayscale lg:hover:grayscale-0"
               sizes="(max-width: 1024px) 100vw, 50vw"
@@ -51,8 +54,8 @@ export function OurStorySection() {
             />
             <div className="absolute bottom-4 right-4 z-10 max-w-[min(100%,calc(100%-2rem))] rounded-xl border border-white/10 bg-black/90 px-4 py-3 shadow-lg backdrop-blur-sm sm:bottom-5 sm:right-5">
               <p className="text-left text-xs font-semibold leading-snug sm:text-sm">
-                <span className="text-white">EL OUATIKI Frères</span>
-                <span className="text-cyan-400"> — Bâtisseurs d&apos;Avenir</span>
+                <span className="text-white">{t("overlayBrand")}</span>
+                <span className="text-cyan-400">{t("overlayTagline")}</span>
               </p>
             </div>
           </div>
@@ -76,7 +79,7 @@ export function OurStorySection() {
             custom={0}
             className="mb-4 text-sm font-bold uppercase tracking-wider text-orange-500"
           >
-            L&apos;HISTOIRE D&apos;EL OUATIKI FRÈRES
+            {t("eyebrow")}
           </motion.p>
 
           <motion.h2
@@ -85,7 +88,7 @@ export function OurStorySection() {
             custom={1}
             className="mb-6 font-[family-name:var(--font-space-grotesk)] text-4xl font-bold leading-tight tracking-tight text-white md:text-5xl"
           >
-            L&apos;expérience du terrain. La puissance de la donnée.
+            {t("title")}
           </motion.h2>
 
           <motion.p
@@ -93,9 +96,7 @@ export function OurStorySection() {
             custom={2}
             className="mb-4 text-lg leading-relaxed text-zinc-300"
           >
-            Chez EL OUATIKI Frères, le bâtiment est une histoire de famille. Après des années
-            passées sur les chantiers à gérer les équipes et les imprévus, nous avons décidé de
-            résoudre le plus grand problème du BTP : le manque de synchronisation.
+            {t("p1")}
           </motion.p>
 
           <motion.p
@@ -103,8 +104,7 @@ export function OurStorySection() {
             custom={3}
             className="mb-4 text-lg leading-relaxed text-zinc-300"
           >
-            Nous avons transformé notre ADN pour allier le savoir-faire traditionnel à
-            l&apos;Intelligence Artificielle (BIM, IoT, Computer Vision).
+            {t("p2")}
           </motion.p>
 
           <motion.p
@@ -112,8 +112,7 @@ export function OurStorySection() {
             custom={4}
             className="mb-8 text-lg font-semibold leading-relaxed text-white"
           >
-            Aujourd&apos;hui, nous ne sommes pas qu&apos;une entreprise technologique. Nous sommes
-            des bâtisseurs qui offrent à vos équipes les outils de demain.
+            {t("p3")}
           </motion.p>
 
           <motion.p
@@ -121,7 +120,7 @@ export function OurStorySection() {
             custom={5}
             className="font-[family-name:var(--font-caveat)] text-3xl text-cyan-300 md:text-4xl"
           >
-            Les Frères El Ouatiki
+            {t("signature")}
           </motion.p>
         </motion.div>
       </div>

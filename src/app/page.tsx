@@ -1,31 +1,28 @@
-import { ConsultingSection } from "@/components/consulting-section";
-import { ContactSection } from "@/components/contact-section";
-import { HeroSection } from "@/components/hero-section";
-import { MethodSection } from "@/components/method-section";
-import { MethodologySection } from "@/components/methodology-section";
-import { RealisationsSection } from "@/components/realisations-section";
-import { SiteFooter } from "@/components/site-footer";
-import { OurStorySection } from "@/components/our-story-section";
-import { PartnerCarousel } from "@/components/partner-carousel";
+"use client";
+
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+import { routing } from "@/i18n/routing";
 
 /**
- * Page d’accueil fusionnée : flux de l’ancienne version (consulting, histoire,
- * méthodologie, contact) + hero / méthode / Bento / footer de la nouvelle.
+ * Export statique sans middleware : la racine `/` redirige côté client vers une locale.
+ * Priorité à la langue du navigateur si elle est prise en charge, sinon `defaultLocale`.
  */
-export default function Home() {
+export default function RootRedirectPage() {
+  const router = useRouter();
+
+  useEffect(() => {
+    const raw = navigator.language?.slice(0, 2)?.toLowerCase() ?? "";
+    const locale = (routing.locales as readonly string[]).includes(raw)
+      ? raw
+      : routing.defaultLocale;
+    router.replace(`/${locale}/`);
+  }, [router]);
+
   return (
-    <main className="overflow-x-hidden bg-zinc-950">
-      <HeroSection />
-      <MethodSection />
-      <ConsultingSection />
-      <OurStorySection />
-      <div id="methodologie" className="scroll-mt-24">
-        <MethodologySection />
-      </div>
-      <RealisationsSection />
-      <PartnerCarousel />
-      <ContactSection />
-      <SiteFooter />
-    </main>
+    <div className="flex min-h-svh items-center justify-center bg-zinc-950 text-sm text-zinc-500">
+      …
+    </div>
   );
 }

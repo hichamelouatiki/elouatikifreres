@@ -5,10 +5,11 @@
  * Le drawer est rendu via portail pour rester conforme au DOM (ul > li uniquement).
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { BarChart3, ChevronRight, Package, RefreshCw, TrafficCone, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { FadeUp } from "@/components/fade-up";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,18 @@ export function LogisticsFeatureCard({
   onClose,
   animationDelay = 0,
 }: LogisticsFeatureCardProps) {
+  const t = useTranslations("Features.logistics");
   const [mounted, setMounted] = useState(false);
+
+  const stats = useMemo(
+    () =>
+      [
+        { value: "−30%", label: t("s1l") },
+        { value: "+20%", label: t("s2l") },
+        { value: "0", label: t("s3l") },
+      ] as const,
+    [t],
+  );
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -43,7 +55,7 @@ export function LogisticsFeatureCard({
         <>
           <motion.button
             type="button"
-            aria-label="Fermer le panneau logistique"
+            aria-label={t("closeAria")}
             className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-xl backdrop-saturate-150"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -70,33 +82,26 @@ export function LogisticsFeatureCard({
               </button>
             </div>
 
-            {/* 1. Header visuel 16:9 */}
             <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-2xl bg-zinc-950 ring-1 ring-white/10">
               <LogisticsFlowVisual />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
                 <span className="inline-flex items-center rounded-full border border-orange-500/40 bg-orange-500/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-orange-200 backdrop-blur-md sm:text-xs">
-                  Synchronisation Logistique IA Active
+                  {t("badge")}
                 </span>
               </div>
             </div>
 
-            {/* 2. Accroche */}
             <div className="mb-8 space-y-4">
               <h3
                 id="logistics-drawer-title"
                 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight text-white sm:text-3xl"
               >
-                Le bon matériau, au bon endroit, à la seconde près.
+                {t("drawerTitle")}
               </h3>
-              <p className="text-base leading-relaxed text-zinc-400">
-                Sur un chantier traditionnel, 30% du temps est perdu à attendre. Notre IA connecte
-                votre chaîne d&apos;approvisionnement directement à l&apos;avancement réel du
-                terrain.
-              </p>
+              <p className="text-base leading-relaxed text-zinc-400">{t("drawerDesc")}</p>
             </div>
 
-            {/* 3. Avantages */}
             <ul className="mb-8 space-y-5">
               <li className="flex gap-4">
                 <div className="flex size-11 shrink-0 items-center justify-center rounded-xl border border-orange-500/30 bg-orange-500/10">
@@ -104,11 +109,8 @@ export function LogisticsFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Prévision des goulots :{" "}
-                    <span className="font-normal text-zinc-400">
-                      L&apos;algorithme anticipe les conflits de co-activité et la saturation des
-                      équipements des jours à l&apos;avance.
-                    </span>
+                    {t("b1t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b1b")}</span>
                   </p>
                 </div>
               </li>
@@ -118,11 +120,8 @@ export function LogisticsFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Flux Juste-à-Temps :{" "}
-                    <span className="font-normal text-zinc-400">
-                      Déclenchement des livraisons exactement quand l&apos;équipe est prête.
-                      Réduction massive du gaspillage matériel.
-                    </span>
+                    {t("b2t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b2b")}</span>
                   </p>
                 </div>
               </li>
@@ -132,23 +131,15 @@ export function LogisticsFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Planning Dynamique :{" "}
-                    <span className="font-normal text-zinc-400">
-                      En cas d&apos;imprévu (météo, retard), l&apos;IA recalcule le chemin critique
-                      et réaffecte les équipes instantanément.
-                    </span>
+                    {t("b3t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b3b")}</span>
                   </p>
                 </div>
               </li>
             </ul>
 
-            {/* 4. Data points */}
             <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                { value: "−30%", label: "Coûts de stockage" },
-                { value: "+20%", label: "Productivité" },
-                { value: "0", label: "Temps mort" },
-              ].map((stat) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-center sm:text-left"
@@ -159,7 +150,6 @@ export function LogisticsFeatureCard({
               ))}
             </div>
 
-            {/* 5. CTA */}
             <Button
               type="button"
               variant="orange"
@@ -167,7 +157,7 @@ export function LogisticsFeatureCard({
               className="w-full hover:bg-orange-600"
               onClick={onClose}
             >
-              Voir une démo du pilotage temps réel
+              {t("cta")}
             </Button>
           </motion.aside>
         </>
@@ -199,14 +189,11 @@ export function LogisticsFeatureCard({
                 <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl border border-orange-500/30 bg-black/30">
                   <BarChart3 className="size-5 text-orange-400" aria-hidden />
                 </div>
-                <CardTitle>Pilotage & Logistique Data</CardTitle>
-                <CardDescription>
-                  Ordonnancement fin, flux matériaux et synchronisation des équipes pilotés par la
-                  donnée chantier en temps réel.
-                </CardDescription>
+                <CardTitle>{t("cardTitle")}</CardTitle>
+                <CardDescription>{t("cardDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="flex items-center justify-between px-0 pb-0">
-                <span className="text-sm text-zinc-500">Ouvrir le détail</span>
+                <span className="text-sm text-zinc-500">{t("openDetail")}</span>
                 <ChevronRight
                   className="size-5 text-orange-400 transition-transform group-hover:translate-x-1"
                   aria-hidden

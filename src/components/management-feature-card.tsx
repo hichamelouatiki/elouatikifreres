@@ -5,10 +5,11 @@
  * Même pattern portail + Framer Motion que les autres feature cards.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Building2, ChevronRight, FileCheck2, FolderKanban, Network, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { DigitalTwinVisual } from "@/components/digital-twin-visual";
 import { FadeUp } from "@/components/fade-up";
@@ -29,7 +30,18 @@ export function ManagementFeatureCard({
   onClose,
   animationDelay = 0,
 }: ManagementFeatureCardProps) {
+  const t = useTranslations("Features.management");
   const [mounted, setMounted] = useState(false);
+
+  const stats = useMemo(
+    () =>
+      [
+        { value: "+21%", label: t("s1l") },
+        { value: "+31%", label: t("s2l") },
+        { value: "0", label: t("s3l") },
+      ] as const,
+    [t],
+  );
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -42,7 +54,7 @@ export function ManagementFeatureCard({
         <>
           <motion.button
             type="button"
-            aria-label="Fermer le panneau livraison et jumeau numérique"
+            aria-label={t("closeAria")}
             className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-xl backdrop-saturate-150"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -74,7 +86,7 @@ export function ManagementFeatureCard({
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
                 <span className="inline-flex items-center rounded-full border border-green-500/40 bg-green-500/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-green-100 backdrop-blur-md sm:text-xs">
-                  {"Jumeau numérique & DOE synchronisés"}
+                  {t("badge")}
                 </span>
               </div>
             </div>
@@ -84,14 +96,9 @@ export function ManagementFeatureCard({
                 id="management-drawer-title"
                 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold leading-tight text-white sm:text-3xl"
               >
-                De la réception à l&apos;exploitation : un actif entièrement numérique.
+                {t("drawerTitle")}
               </h3>
-              <p className="text-base leading-relaxed text-zinc-400">
-                La livraison n&apos;est pas une fin : c&apos;est le point de bascule vers la valeur
-                long terme. Nous consolidons le DOE, les preuves de conformité et le jumeau
-                d&apos;exploitation pour que chaque décision après livraison s&apos;appuie sur des
-                données à jour, structurées et exploitables.
-              </p>
+              <p className="text-base leading-relaxed text-zinc-400">{t("drawerDesc")}</p>
             </div>
 
             <ul className="mb-8 space-y-5">
@@ -101,11 +108,8 @@ export function ManagementFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    DOE &amp; réception numérique :{" "}
-                    <span className="font-normal text-zinc-400">
-                      Dossiers homogènes, preuves traçables et clôture de lots sans friction
-                      documentaire.
-                    </span>
+                    {t("b1t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b1b")}</span>
                   </p>
                 </div>
               </li>
@@ -115,11 +119,8 @@ export function ManagementFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Jumeau d&apos;exploitation :{" "}
-                    <span className="font-normal text-zinc-400">
-                      Le modèle BIM enrichi des as-built et des capteurs pour suivre l&apos;ouvrage
-                      comme un système vivant.
-                    </span>
+                    {t("b2t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b2b")}</span>
                   </p>
                 </div>
               </li>
@@ -129,22 +130,15 @@ export function ManagementFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Pilotage financier &amp; GMAO :{" "}
-                    <span className="font-normal text-zinc-400">
-                      Tableaux de bord et intégrations pour prolonger la rentabilité et réduire les
-                      coûts cachés du cycle de vie.
-                    </span>
+                    {t("b3t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b3b")}</span>
                   </p>
                 </div>
               </li>
             </ul>
 
             <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                { value: "+21%", label: "Rentabilité" },
-                { value: "+31%", label: "Productivité" },
-                { value: "0", label: "Papier" },
-              ].map((stat) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-center sm:text-left"
@@ -162,7 +156,7 @@ export function ManagementFeatureCard({
               className="w-full hover:bg-green-400"
               onClick={onClose}
             >
-              Structurer ma livraison
+              {t("cta")}
             </Button>
           </motion.aside>
         </>
@@ -194,14 +188,11 @@ export function ManagementFeatureCard({
                 <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl border border-green-500/30 bg-black/30">
                   <FolderKanban className="size-5 text-green-400" aria-hidden />
                 </div>
-                <CardTitle>{"Livraison & Jumeau Numérique"}</CardTitle>
-                <CardDescription>
-                  Réception, DOE numérique et jumeau d&apos;exploitation pour prolonger la valeur
-                  de l&apos;ouvrage après livraison.
-                </CardDescription>
+                <CardTitle>{t("cardTitle")}</CardTitle>
+                <CardDescription>{t("cardDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="flex items-center justify-between px-0 pb-0">
-                <span className="text-sm text-zinc-500">Ouvrir le détail</span>
+                <span className="text-sm text-zinc-500">{t("openDetail")}</span>
                 <ChevronRight
                   className="size-5 text-green-400 transition-transform group-hover:translate-x-1"
                   aria-hidden

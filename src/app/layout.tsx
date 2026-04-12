@@ -1,9 +1,6 @@
-import type { Metadata } from "next";
-import { Caveat, Inter, Space_Grotesk } from "next/font/google";
+import { Caveat, Inter, Noto_Sans_Arabic, Space_Grotesk } from "next/font/google";
+import type { ReactNode } from "react";
 
-import { SITE_LOGO_INTRINSIC, SITE_LOGO_SRC } from "@/components/site-logo";
-import { SiteHeader } from "@/components/site-header";
-import { SITE_DESCRIPTION } from "@/lib/site";
 import "./globals.css";
 
 const inter = Inter({
@@ -21,49 +18,24 @@ const caveat = Caveat({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  metadataBase: new URL("https://elouatikifreres.com"),
-  title: "Elouatikifreres | IA & Travaux BTP",
-  description: SITE_DESCRIPTION,
-  openGraph: {
-    title: "Elouatikifreres | IA & Travaux BTP",
-    description: SITE_DESCRIPTION,
-    locale: "fr_FR",
-    type: "website",
-    images: [
-      {
-        url: SITE_LOGO_SRC,
-        width: SITE_LOGO_INTRINSIC.width,
-        height: SITE_LOGO_INTRINSIC.height,
-        alt: "El Ouatiki Frères",
-      },
-    ],
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: "Elouatikifreres | IA & Travaux BTP",
-    description: SITE_DESCRIPTION,
-    images: [SITE_LOGO_SRC],
-  },
-  icons: {
-    icon: SITE_LOGO_SRC,
-  },
-};
+const notoArabic = Noto_Sans_Arabic({
+  variable: "--font-noto-arabic",
+  subsets: ["arabic"],
+  weight: ["400", "600", "700"],
+});
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
     <html
+      suppressHydrationWarning
+      className={`${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} ${notoArabic.variable} h-full scroll-smooth antialiased`}
       lang="fr"
-      className={`${inter.variable} ${spaceGrotesk.variable} ${caveat.variable} h-full scroll-smooth antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        <SiteHeader />
-        <div className="flex flex-1 flex-col pt-16">{children}</div>
-      </body>
+      <body className="flex min-h-full flex-col">{children}</body>
     </html>
   );
 }

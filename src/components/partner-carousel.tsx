@@ -9,6 +9,7 @@
 import { Fragment, useCallback, useLayoutEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { motion, useAnimationFrame, useReducedMotion } from "framer-motion";
+import { useTranslations } from "next-intl";
 
 import { PARTNER_LOGOS, type PartnerLogo } from "@/data/partner-logos";
 import { cn } from "@/lib/utils";
@@ -29,10 +30,11 @@ function grayscaleForCenterWindow(distPx: number, vw: number): number {
 
 type LogoCellProps = {
   logo: PartnerLogo;
+  alt: string;
   setRef: (el: HTMLDivElement | null) => void;
 };
 
-function LogoCell({ logo, setRef }: LogoCellProps) {
+function LogoCell({ logo, alt, setRef }: LogoCellProps) {
   return (
     <div
       ref={setRef}
@@ -43,7 +45,7 @@ function LogoCell({ logo, setRef }: LogoCellProps) {
     >
       <Image
         src={logo.src}
-        alt={logo.alt}
+        alt={alt}
         width={220}
         height={110}
         className="max-h-full max-w-full object-contain object-center"
@@ -57,11 +59,13 @@ function LogoRow({
   logos,
   baseIndex,
   setRefAt,
+  logoAlt,
   className,
 }: {
   logos: PartnerLogo[];
   baseIndex: number;
   setRefAt: (index: number, el: HTMLDivElement | null) => void;
+  logoAlt: (id: string) => string;
   className?: string;
 }) {
   return (
@@ -72,15 +76,22 @@ function LogoRow({
       )}
     >
       {logos.map((logo, i) => (
-        <LogoCell key={`${baseIndex}-${i}-${logo.src}`} logo={logo} setRef={(el) => setRefAt(baseIndex + i, el)} />
+        <LogoCell
+          key={`${baseIndex}-${i}-${logo.src}`}
+          logo={logo}
+          alt={logoAlt(logo.id)}
+          setRef={(el) => setRefAt(baseIndex + i, el)}
+        />
       ))}
     </div>
   );
 }
 
 export function PartnerCarousel({ className }: { className?: string }) {
+  const t = useTranslations("Partners");
   const logos = PARTNER_LOGOS;
   const logosCount = logos.length;
+  const logoAlt = useCallback((id: string) => t(`alt.${id}`), [t]);
   const count = logos.length * 2;
   const cellRefs = useRef<(HTMLDivElement | null)[]>([]);
 
@@ -161,7 +172,10 @@ export function PartnerCarousel({ className }: { className?: string }) {
   });
 
   const duration = loopWidth > 0 ? Math.max(28, loopWidth / 45) : 0;
-  const activeAlt = useMemo(() => logos[activeLogoIndex]?.alt ?? "", [logos, activeLogoIndex]);
+  const activeAlt = useMemo(() => {
+    const logo = logos[activeLogoIndex];
+    return logo ? logoAlt(logo.id) : "";
+  }, [logos, activeLogoIndex, logoAlt]);
   const activeAltLines = useMemo(() => {
     // Règle demandée : quand on trouve " - ", on passe à la ligne.
     // On gère aussi les séparateurs typographiques fréquents.
@@ -182,18 +196,16 @@ export function PartnerCarousel({ className }: { className?: string }) {
       <div className="mx-auto max-w-7xl">
         <header className="mx-auto max-w-3xl text-center">
           <p className="mb-3 text-sm font-medium uppercase tracking-[0.24em] text-cyan-400/90">
-            Références
+            {t("eyebrow")}
           </p>
           <h2
             id="titre-partenaires"
             className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-[2.5rem]"
           >
-            Ils nous font confiance
+            {t("title")}
           </h2>
           <p className="mt-4 text-pretty text-base leading-relaxed text-zinc-400 sm:text-lg">
-            Des acteurs majeurs de la construction, du service public et de l&apos;innovation
-            s&apos;appuient sur notre méthode pour sécuriser l&apos;exécution de leurs projets
-            complexes.
+            {t("subtitle")}
           </p>
         </header>
 
@@ -217,10 +229,15 @@ export function PartnerCarousel({ className }: { className?: string }) {
             }
           >
             <div ref={rowRef} className="flex">
-              <LogoRow logos={logos} baseIndex={0} setRefAt={setRefAt} />
+              <LogoRow logos={logos} baseIndex={0} setRefAt={setRefAt} logoAlt={logoAlt} />
             </div>
             <div className="flex" aria-hidden>
-              <LogoRow logos={logos} baseIndex={logos.length} setRefAt={setRefAt} />
+              <LogoRow
+                logos={logos}
+                baseIndex={logos.length}
+                setRefAt={setRefAt}
+                logoAlt={logoAlt}
+              />
             </div>
           </motion.div>
         </div>

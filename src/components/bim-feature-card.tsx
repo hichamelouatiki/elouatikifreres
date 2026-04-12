@@ -5,10 +5,11 @@
  * Même pattern que LogisticsFeatureCard pour cohérence d’équipe.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Blocks, ChevronRight, Layers, Ruler, ShieldCheck, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { FadeUp } from "@/components/fade-up";
 import { Button } from "@/components/ui/button";
@@ -30,7 +31,19 @@ export function BimFeatureCard({
   onClose,
   animationDelay = 0,
 }: BimFeatureCardProps) {
+  const t = useTranslations("Features.bim");
   const [mounted, setMounted] = useState(false);
+
+  const stats = useMemo(
+    () =>
+      [
+        { value: "−15%", label: t("s1l") },
+        { value: "100%", label: t("s2l") },
+        { value: "0", label: t("s3l") },
+      ] as const,
+    [t],
+  );
+
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
     return () => cancelAnimationFrame(id);
@@ -42,7 +55,7 @@ export function BimFeatureCard({
         <>
           <motion.button
             type="button"
-            aria-label="Fermer le panneau BIM"
+            aria-label={t("closeAria")}
             className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-xl backdrop-saturate-150"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -74,7 +87,7 @@ export function BimFeatureCard({
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/85 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
                 <span className="inline-flex items-center rounded-full border border-cyan-500/40 bg-cyan-500/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-cyan-100 backdrop-blur-md sm:text-xs">
-                  Détection de conflits BIM active
+                  {t("badge")}
                 </span>
               </div>
             </div>
@@ -84,12 +97,9 @@ export function BimFeatureCard({
                 id="bim-drawer-title"
                 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-bold leading-tight text-white sm:text-3xl"
               >
-                Simulateur Clash Detection
+                {t("drawerTitle")}
               </h3>
-              <p className="text-base leading-relaxed text-zinc-400">
-                Maquette numérique, détection de conflits et arbitrages data dès la conception pour
-                sécuriser coûts et délais.
-              </p>
+              <p className="text-base leading-relaxed text-zinc-400">{t("drawerDesc")}</p>
             </div>
 
             <ul className="mb-8 space-y-5">
@@ -98,10 +108,8 @@ export function BimFeatureCard({
                   <Layers className="size-5 text-cyan-400" aria-hidden />
                 </div>
                 <p className="font-semibold text-white">
-                  Modèles fédérés :{" "}
-                  <span className="font-normal text-zinc-400">
-                    Agrégation multi-lots avec règles de collision automatiques avant exécution.
-                  </span>
+                  {t("b1t")}{" "}
+                  <span className="font-normal text-zinc-400">{t("b1b")}</span>
                 </p>
               </li>
               <li className="flex gap-4">
@@ -109,10 +117,8 @@ export function BimFeatureCard({
                   <Ruler className="size-5 text-orange-400" aria-hidden />
                 </div>
                 <p className="font-semibold text-white">
-                  Quantités & coûts :{" "}
-                  <span className="font-normal text-zinc-400">
-                    Extraction BIM reliée aux bordereaux pour suivre l&apos;écart budget / réalisé.
-                  </span>
+                  {t("b2t")}{" "}
+                  <span className="font-normal text-zinc-400">{t("b2b")}</span>
                 </p>
               </li>
               <li className="flex gap-4">
@@ -120,20 +126,14 @@ export function BimFeatureCard({
                   <ShieldCheck className="size-5 text-green-400" aria-hidden />
                 </div>
                 <p className="font-semibold text-white">
-                  Conformité :{" "}
-                  <span className="font-normal text-zinc-400">
-                    Scénarios de reprise et preuves numériques pour la coordination MOEX / entreprises.
-                  </span>
+                  {t("b3t")}{" "}
+                  <span className="font-normal text-zinc-400">{t("b3b")}</span>
                 </p>
               </li>
             </ul>
 
             <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                { value: "−15%", label: "Dépassement budget" },
-                { value: "100%", label: "Conflits résolus" },
-                { value: "0", label: "Jour de retard" },
-              ].map((stat) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-center sm:text-left"
@@ -145,7 +145,7 @@ export function BimFeatureCard({
             </div>
 
             <Button type="button" variant="default" size="lg" className="w-full" onClick={onClose}>
-              Lancer la simulation BIM
+              {t("cta")}
             </Button>
           </motion.aside>
         </>
@@ -177,14 +177,11 @@ export function BimFeatureCard({
                 <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl border border-cyan-400/30 bg-black/30">
                   <Blocks className="size-5 text-cyan-400" aria-hidden />
                 </div>
-                <CardTitle>Conception Intelligente & BIM</CardTitle>
-                <CardDescription>
-                  Maquette numérique, détection de conflits et arbitrages data dès la conception pour
-                  sécuriser coûts et délais.
-                </CardDescription>
+                <CardTitle>{t("cardTitle")}</CardTitle>
+                <CardDescription>{t("cardDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="flex items-center justify-between px-0 pb-0">
-                <span className="text-sm text-zinc-500">Ouvrir le détail</span>
+                <span className="text-sm text-zinc-500">{t("openDetail")}</span>
                 <ChevronRight
                   className="size-5 text-cyan-400 transition-transform group-hover:translate-x-1"
                   aria-hidden

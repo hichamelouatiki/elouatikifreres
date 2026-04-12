@@ -5,10 +5,11 @@
  * Même pattern portail + Framer Motion que BIM / Logistique.
  */
 
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Camera, ChevronRight, Cpu, TabletSmartphone, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 import { ComputerVisionVisual } from "@/components/computer-vision-visual";
 import { FadeUp } from "@/components/fade-up";
@@ -29,7 +30,18 @@ export function TrackingFeatureCard({
   onClose,
   animationDelay = 0,
 }: TrackingFeatureCardProps) {
+  const t = useTranslations("Features.tracking");
   const [mounted, setMounted] = useState(false);
+
+  const stats = useMemo(
+    () =>
+      [
+        { value: "100%", label: t("s1l") },
+        { value: "−40%", label: t("s2l") },
+        { value: "0", label: t("s3l") },
+      ] as const,
+    [t],
+  );
 
   useEffect(() => {
     const id = requestAnimationFrame(() => setMounted(true));
@@ -42,7 +54,7 @@ export function TrackingFeatureCard({
         <>
           <motion.button
             type="button"
-            aria-label="Fermer le panneau suivi 360°"
+            aria-label={t("closeAria")}
             className="fixed inset-0 z-[100] bg-black/45 backdrop-blur-xl backdrop-saturate-150"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -74,7 +86,7 @@ export function TrackingFeatureCard({
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
                 <span className="inline-flex items-center rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-100 backdrop-blur-md sm:text-xs">
-                  Computer Vision & IoT Actifs
+                  {t("badge")}
                 </span>
               </div>
             </div>
@@ -84,13 +96,9 @@ export function TrackingFeatureCard({
                 id="tracking-drawer-title"
                 className="font-[family-name:var(--font-space-grotesk)] text-2xl font-semibold leading-tight text-white sm:text-3xl"
               >
-                Le chantier devient un environnement intelligent.
+                {t("drawerTitle")}
               </h3>
-              <p className="text-base leading-relaxed text-zinc-400">
-                Grâce aux capteurs IoT et à la vision par ordinateur, nous transformons chaque
-                action sur le terrain en une donnée fiable, traçable et actionnable pour un contrôle
-                qualité total.
-              </p>
+              <p className="text-base leading-relaxed text-zinc-400">{t("drawerDesc")}</p>
             </div>
 
             <ul className="mb-8 space-y-5">
@@ -100,11 +108,8 @@ export function TrackingFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Vision par Ordinateur :{" "}
-                    <span className="font-normal text-zinc-400">
-                      L&apos;IA compare la construction réelle avec le BIM et vérifie
-                      automatiquement le respect des normes de sécurité.
-                    </span>
+                    {t("b1t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b1b")}</span>
                   </p>
                 </div>
               </li>
@@ -114,11 +119,8 @@ export function TrackingFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Checklists Numériques :{" "}
-                    <span className="font-normal text-zinc-400">
-                      Chaque étape est photographiée, géolocalisée et validée sur tablette.
-                      Traçabilité totale.
-                    </span>
+                    {t("b2t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b2b")}</span>
                   </p>
                 </div>
               </li>
@@ -128,22 +130,15 @@ export function TrackingFeatureCard({
                 </div>
                 <div>
                   <p className="font-semibold text-white">
-                    Capteurs IoT :{" "}
-                    <span className="font-normal text-zinc-400">
-                      Sondes connectées mesurant le séchage du béton ou la météo en temps réel pour
-                      déclencher les prochaines tâches au moment idéal.
-                    </span>
+                    {t("b3t")}{" "}
+                    <span className="font-normal text-zinc-400">{t("b3b")}</span>
                   </p>
                 </div>
               </li>
             </ul>
 
             <div className="mb-8 grid grid-cols-1 gap-4 sm:grid-cols-3">
-              {[
-                { value: "100%", label: "Traçabilité" },
-                { value: "−40%", label: "Temps de reporting" },
-                { value: "0", label: "Défaut de sécurité" },
-              ].map((stat) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="rounded-[20px] border border-white/10 bg-white/5 p-4 text-center sm:text-left"
@@ -160,7 +155,7 @@ export function TrackingFeatureCard({
               className="w-full bg-cyan-600 text-white hover:bg-cyan-500"
               onClick={onClose}
             >
-              Découvrir un rapport de chantier interactif
+              {t("cta")}
             </Button>
           </motion.aside>
         </>
@@ -192,14 +187,11 @@ export function TrackingFeatureCard({
                 <div className="mb-4 inline-flex size-12 items-center justify-center rounded-2xl border border-cyan-400/30 bg-black/30">
                   <Camera className="size-5 text-cyan-400" aria-hidden />
                 </div>
-                <CardTitle>{"Réalisation Connectée & Suivi 360°"}</CardTitle>
-                <CardDescription>
-                  Capteurs, reporting automatisé et indicateurs terrain pour une visibilité
-                  complète sur l&apos;exécution.
-                </CardDescription>
+                <CardTitle>{t("cardTitle")}</CardTitle>
+                <CardDescription>{t("cardDesc")}</CardDescription>
               </CardHeader>
               <CardContent className="flex items-center justify-between px-0 pb-0">
-                <span className="text-sm text-zinc-500">Ouvrir le détail</span>
+                <span className="text-sm text-zinc-500">{t("openDetail")}</span>
                 <ChevronRight
                   className="size-5 text-cyan-400 transition-transform group-hover:translate-x-1"
                   aria-hidden
