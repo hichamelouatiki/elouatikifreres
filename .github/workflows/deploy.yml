@@ -48,3 +48,5 @@ jobs:
           dangerous-clean-slate: false
           # Option pour ignorer les erreurs de certificats SSL si besoin
           protocol: ftp
+          # Hostinger peut fermer lentement le canal de contrôle pendant une synchro complète
+          timeout: 120000
