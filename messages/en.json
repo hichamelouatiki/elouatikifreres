@@ -26,6 +26,7 @@
     "titleLine1": "Data intelligence.",
     "titleLine2": "Excellence in the field.",
     "subtitle": "From algorithmic design to final delivery, we redefine how work is executed—with data discipline and flawless field execution.",
+    "subheadline": "Secure your construction budgets and deadlines. We combine field expertise and Artificial Intelligence (BIM, IoT) to run your sites in real time.",
     "ctaProject": "Simulate my project",
     "ctaMethod": "Discover our method"
   },
@@ -66,6 +67,16 @@
     "genericCtaTracking": "Enable 360° tracking",
     "genericCtaManagement": "Structure my delivery"
   },
+  "BimCompare": {
+    "title": "Technological mastery: data becomes reality",
+    "slogan": "From bit to concrete",
+    "labelBim": "BIM modeling (bit)",
+    "labelReal": "Real site (concrete)",
+    "hint": "Drag to compare the digital model and the construction site.",
+    "sliderLabel": "BIM vs site comparison position",
+    "altBim": "BIM model — digital view",
+    "altReal": "Real construction site — photograph"
+  },
   "Methodology": {
     "eyebrow": "Our methodology",
     "title": "A clear timeline of decisions—from initial diagnosis to digital as-built documentation.",
@@ -99,7 +110,17 @@
     "title": "Simulate your site and get an initial framing.",
     "intro": "Ready to transform how your sites are executed? Describe your project in a few lines for a first simulation and strategic framing from our experts.",
     "formTitle": "Tell us about your project",
-    "formHint": "Fill in this form to get a simulation and strategic framing."
+    "formHint": "Fill in this form to get a simulation and strategic framing.",
+    "trustEyebrow": "Social proof",
+    "trustTitle": "Join the leaders who trust us with their complex construction sites.",
+    "trustBody": "Public institutions, industrial groups, and infrastructure operators rely on our field + data approach to de-risk critical operations.",
+    "trustProof": "A clear request, a first expert response, then a framing focused on budget, schedule, and operational risks.",
+    "trustLogos": {
+      "ocp": "OCP Group",
+      "veolia": "Veolia Transport",
+      "ministeres": "Moroccan ministries",
+      "jesa": "JESA"
+    }
   },
   "Form": {
     "successTitle": "Request sent successfully",
@@ -155,7 +176,34 @@
     "bd2": "5M - 20M MAD",
     "bd3": "20M - 50M MAD",
     "bd4": "> 50M MAD",
-    "bd5": "To be defined"
+    "bd5": "To be defined",
+    "progressLabel": "Step {current}/{total}",
+    "back": "Back",
+    "next": "Next",
+    "step1Eyebrow": "Need",
+    "step1Title": "What type of project would you like to simulate?",
+    "step1Hint": "Choose the closest context: we will adapt the simulation to your business constraints.",
+    "step2Eyebrow": "Volume",
+    "step2Title": "What is the estimated project budget?",
+    "step2Hint": "A range is enough to calibrate the level of analysis, BIM, and data-driven control.",
+    "step3Eyebrow": "Context",
+    "step3Title": "Tell us more about your stakes (Optional)",
+    "step3Hint": "This step is optional. Add context, a critical deadline, or plans if you already have them.",
+    "step4Eyebrow": "Contact details",
+    "step4Title": "Where should we send your simulation and action plan?",
+    "step4Hint": "We use this information only to send the simulation and organize the first framing call.",
+    "labelMessageOptional": "Stakes, constraints, or goals (optional)",
+    "placeholderMessageOptional": "E.g. delay reduction, BIM clash detection, cost/schedule control, digital as-built file…",
+    "dropzoneTitle": "Drop your plans here or click to attach a file",
+    "removeAttachment": "Remove file",
+    "submitFinal": "Get my free simulation",
+    "summaryTitle": "Qualification summary",
+    "summaryMissing": "Not provided",
+    "ptMarcheShort": "Public procurement",
+    "ptTertiaireShort": "Tertiary building",
+    "ptIndustrielShort": "Industrial building",
+    "ptInfraShort": "Infrastructure",
+    "ptRehabShort": "Rehabilitation"
   },
   "Partners": {
     "eyebrow": "References",
@@ -217,7 +265,7 @@
       "cta": "Launch the BIM simulation",
       "cardTitle": "Smart design & BIM",
       "cardDesc": "Digital models, clash detection, and data trade-offs from design to protect cost and schedule.",
-      "openDetail": "Open details"
+      "openDetail": "Explore the modeling"
     },
     "logistics": {
       "closeAria": "Close logistics panel",
@@ -236,7 +284,7 @@
       "cta": "See a real-time operations demo",
       "cardTitle": "Data-driven operations & logistics",
       "cardDesc": "Fine scheduling, material flows, and crew sync driven by live site data.",
-      "openDetail": "Open details"
+      "openDetail": "Explore data control"
     },
     "tracking": {
       "closeAria": "Close 360° tracking panel",
@@ -255,7 +303,7 @@
       "cta": "Explore an interactive site report",
       "cardTitle": "Connected delivery & 360° tracking",
       "cardDesc": "Sensors, automated reporting, and field KPIs for full visibility on execution.",
-      "openDetail": "Open details"
+      "openDetail": "See use cases"
     },
     "management": {
       "closeAria": "Close delivery & digital twin panel",
@@ -274,7 +322,7 @@
       "cta": "Structure my handover",
       "cardTitle": "Delivery & digital twin",
       "cardDesc": "Handover, digital as-built, and operations twin to extend asset value after delivery.",
-      "openDetail": "Open details"
+      "openDetail": "Discover the digital twin"
     }
   }
 }

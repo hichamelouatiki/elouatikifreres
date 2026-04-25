@@ -180,10 +180,12 @@ export function BimFeatureCard({
                 <CardTitle>{t("cardTitle")}</CardTitle>
                 <CardDescription>{t("cardDesc")}</CardDescription>
               </CardHeader>
-              <CardContent className="flex items-center justify-between px-0 pb-0">
-                <span className="text-sm text-zinc-500">{t("openDetail")}</span>
+              <CardContent className="flex items-center justify-between gap-3 px-0 pb-0">
+                <span className="min-w-0 rounded-full border border-cyan-400/20 bg-cyan-400/10 px-4 py-2 text-sm font-semibold leading-snug text-cyan-100 transition duration-300 group-hover:-translate-y-0.5 group-hover:border-cyan-300/45 group-hover:bg-cyan-400/15 sm:whitespace-nowrap">
+                  {t("openDetail")}
+                </span>
                 <ChevronRight
-                  className="size-5 text-cyan-400 transition-transform group-hover:translate-x-1"
+                  className="size-5 shrink-0 text-cyan-400 transition-transform group-hover:translate-x-1"
                   aria-hidden
                 />
               </CardContent>

@@ -39,25 +39,29 @@ export function HeroSection() {
         aria-hidden
       />
 
-      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-9 sm:gap-11 lg:gap-12">
+      <div className="relative mx-auto flex w-full max-w-7xl flex-col gap-6 sm:gap-8 lg:gap-10">
         <FadeUp delay={0}>
-          <div className="max-w-5xl">
-            <h1 className="text-balance font-[family-name:var(--font-space-grotesk)] text-4xl font-bold leading-[1.06] tracking-tight text-white drop-shadow-[0_0_60px_rgba(34,211,238,0.08)] sm:text-5xl md:text-6xl lg:text-7xl xl:text-[5.25rem]">
+          <div className="max-w-5xl space-y-5 sm:space-y-6">
+            <h1 className="text-balance font-[family-name:var(--font-space-grotesk)] text-4xl font-bold leading-[1.06] tracking-tight text-white drop-shadow-[0_0_60px_rgba(34,211,238,0.08)] sm:text-5xl md:text-6xl lg:text-[4.5rem] xl:text-[5.25rem]">
               {t("titleLine1")}{" "}
               <span className="bg-gradient-to-r from-white via-zinc-100 to-cyan-200/95 bg-clip-text text-transparent">
                 {t("titleLine2")}
               </span>
             </h1>
+
+            <p className="max-w-2xl text-lg font-medium leading-snug text-white/90 sm:text-xl sm:leading-snug md:text-2xl md:leading-snug">
+              {t("subheadline")}
+            </p>
           </div>
         </FadeUp>
 
-        <FadeUp delay={0.1}>
-          <p className="max-w-2xl text-base leading-relaxed text-zinc-400 sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed">
+        <FadeUp delay={0.12}>
+          <p className="max-w-xl text-sm leading-relaxed text-zinc-400 sm:text-base sm:leading-relaxed md:text-lg md:leading-relaxed">
             {t("subtitle")}
           </p>
         </FadeUp>
 
-        <FadeUp delay={0.2}>
+        <FadeUp delay={0.22}>
           <div className="flex w-full flex-col gap-3 pt-1 sm:flex-row sm:flex-wrap sm:gap-4">
             <a
               href="#contact"

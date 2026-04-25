@@ -26,6 +26,7 @@
     "titleLine1": "L'intelligence des données.",
     "titleLine2": "L'excellence sur le terrain.",
     "subtitle": "De la conception algorithmique à la livraison finale, nous redéfinissons la réalisation de travaux avec rigueur data et exécution terrain irréprochable.",
+    "subheadline": "Sécurisez vos budgets et délais de construction. Nous combinons l'expertise terrain et l'Intelligence Artificielle (BIM, IoT) pour piloter vos chantiers en temps réel.",
     "ctaProject": "Simuler mon projet",
     "ctaMethod": "Découvrir notre méthode"
   },
@@ -66,6 +67,16 @@
     "genericCtaTracking": "Activer le suivi 360°",
     "genericCtaManagement": "Structurer ma livraison"
   },
+  "BimCompare": {
+    "title": "Maîtrise technologique : La donnée devient réalité",
+    "slogan": "Du Bit au Béton",
+    "labelBim": "Modélisation BIM (Bit)",
+    "labelReal": "Chantier Réel (Béton)",
+    "hint": "Faites glisser pour comparer le modèle numérique et le chantier.",
+    "sliderLabel": "Position du comparateur BIM et chantier réel",
+    "altBim": "Modélisation BIM — vue numérique",
+    "altReal": "Chantier réel — photographie du terrain"
+  },
   "Methodology": {
     "eyebrow": "Notre méthodologie",
     "title": "Une frise de décisions claires, du diagnostic initial au DOE numérique.",
@@ -99,7 +110,17 @@
     "title": "Simulez votre chantier et recevez un premier cadrage.",
     "intro": "Prêt à transformer l'exécution de vos chantiers ? Décrivez-nous votre projet en quelques lignes et obtenez une première simulation et un cadrage stratégique de la part de nos experts.",
     "formTitle": "Parlez-nous de votre projet",
-    "formHint": "Remplissez ce formulaire pour obtenir une simulation et un cadrage stratégique."
+    "formHint": "Remplissez ce formulaire pour obtenir une simulation et un cadrage stratégique.",
+    "trustEyebrow": "Preuve sociale",
+    "trustTitle": "Rejoignez les leaders qui nous font confiance pour leurs chantiers complexes.",
+    "trustBody": "Des acteurs publics, industriels et opérateurs d'infrastructures s'appuient sur notre approche terrain + data pour sécuriser leurs opérations critiques.",
+    "trustProof": "Une demande claire, un premier retour expert, puis un cadrage orienté budget, délais et risques opérationnels.",
+    "trustLogos": {
+      "ocp": "OCP Group",
+      "veolia": "Veolia Transport",
+      "ministeres": "Ministères du Royaume du Maroc",
+      "jesa": "JESA"
+    }
   },
   "Form": {
     "successTitle": "Dossier transmis avec succès",
@@ -155,7 +176,34 @@
     "bd2": "5M - 20 Millions MAD",
     "bd3": "20M - 50 Millions MAD",
     "bd4": "> 50 Millions MAD",
-    "bd5": "À définir"
+    "bd5": "À définir",
+    "progressLabel": "Étape {current}/{total}",
+    "back": "Retour",
+    "next": "Suivant",
+    "step1Eyebrow": "Besoin",
+    "step1Title": "Quel type de projet souhaitez-vous simuler ?",
+    "step1Hint": "Choisissez le contexte le plus proche : nous adapterons la simulation à vos contraintes métier.",
+    "step2Eyebrow": "Volume",
+    "step2Title": "Quel est le budget estimé du projet ?",
+    "step2Hint": "Une fourchette suffit pour calibrer le niveau d'analyse, de BIM et de pilotage data.",
+    "step3Eyebrow": "Contexte",
+    "step3Title": "Dites-nous en plus sur vos enjeux (Optionnel)",
+    "step3Hint": "Cette étape est facultative. Ajoutez un contexte, un délai critique ou des plans si vous les avez déjà.",
+    "step4Eyebrow": "Coordonnées",
+    "step4Title": "Où devons-nous envoyer votre simulation et plan d'action ?",
+    "step4Hint": "Nous utilisons ces informations uniquement pour vous transmettre la simulation et organiser le premier cadrage.",
+    "labelMessageOptional": "Message et enjeux du projet (Facultatif)",
+    "placeholderMessageOptional": "Ex. réduction des retards, clash detection BIM, pilotage coûts/délais, DOE numérique…",
+    "dropzoneTitle": "Glissez vos plans ici ou cliquez pour joindre un fichier",
+    "removeAttachment": "Retirer le fichier",
+    "submitFinal": "Recevoir ma simulation gratuite",
+    "summaryTitle": "Récapitulatif de qualification",
+    "summaryMissing": "Non renseigné",
+    "ptMarcheShort": "Marchés Publics",
+    "ptTertiaireShort": "Bâtiment Tertiaire",
+    "ptIndustrielShort": "Bâtiment Industriel",
+    "ptInfraShort": "Infrastructures",
+    "ptRehabShort": "Réhabilitation"
   },
   "Partners": {
     "eyebrow": "Références",
@@ -217,7 +265,7 @@
       "cta": "Lancer la simulation BIM",
       "cardTitle": "Conception Intelligente & BIM",
       "cardDesc": "Maquette numérique, détection de conflits et arbitrages data dès la conception pour sécuriser coûts et délais.",
-      "openDetail": "Ouvrir le détail"
+      "openDetail": "Découvrir la modélisation"
     },
     "logistics": {
       "closeAria": "Fermer le panneau logistique",
@@ -236,7 +284,7 @@
       "cta": "Voir une démo du pilotage temps réel",
       "cardTitle": "Pilotage & Logistique Data",
       "cardDesc": "Ordonnancement fin, flux matériaux et synchronisation des équipes pilotés par la donnée chantier en temps réel.",
-      "openDetail": "Ouvrir le détail"
+      "openDetail": "Explorer le pilotage data"
     },
     "tracking": {
       "closeAria": "Fermer le panneau suivi 360°",
@@ -255,7 +303,7 @@
       "cta": "Découvrir un rapport de chantier interactif",
       "cardTitle": "Réalisation Connectée & Suivi 360°",
       "cardDesc": "Capteurs, reporting automatisé et indicateurs terrain pour une visibilité complète sur l'exécution.",
-      "openDetail": "Ouvrir le détail"
+      "openDetail": "Voir les cas d'usage"
     },
     "management": {
       "closeAria": "Fermer le panneau livraison et jumeau numérique",
@@ -274,7 +322,7 @@
       "cta": "Structurer ma livraison",
       "cardTitle": "Livraison & Jumeau Numérique",
       "cardDesc": "Réception, DOE numérique et jumeau d'exploitation pour prolonger la valeur de l'ouvrage après livraison.",
-      "openDetail": "Ouvrir le détail"
+      "openDetail": "Découvrir le jumeau numérique"
     }
   }
 }
