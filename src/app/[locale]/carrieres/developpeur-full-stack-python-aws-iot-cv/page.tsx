@@ -26,7 +26,7 @@ type Props = {
 };
 
 const jobTitle = "Développeur Full Stack Python et AWS – Focus IoT et Computer Vision (H/F)";
-const applyEmail = "contact@elouatikifreres.com";
+const applyEmail = "rh@elouatikifreres.com";
 const applySubject = "Candidature Full Stack Python AWS - IoT et CV";
 const applyHref = `mailto:${applyEmail}?subject=${encodeURIComponent(applySubject)}`;
 

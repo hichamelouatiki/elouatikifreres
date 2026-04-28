@@ -27,7 +27,7 @@ type Props = {
 
 const jobTitle =
   "Technicien(ne) de Maintenance Multitechnique – Orienté(e) Smart Building et IoT (H/F)";
-const applyEmail = "contact@elouatikifreres.com";
+const applyEmail = "rh@elouatikifreres.com";
 const applySubject = "Candidature Technicien Maintenance et IoT";
 const applyHref = `mailto:${applyEmail}?subject=${encodeURIComponent(applySubject)}`;
 

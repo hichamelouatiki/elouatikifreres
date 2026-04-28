@@ -25,7 +25,7 @@ type Props = {
 };
 
 const jobTitle = "Senior Data Scientist – Spécialiste IA et BTP (H/F)";
-const applyEmail = "contact@elouatikifreres.com";
+const applyEmail = "rh@elouatikifreres.com";
 const applySubject = "Candidature Senior Data Scientist BTP";
 const applyHref = `mailto:${applyEmail}?subject=${encodeURIComponent(applySubject)}`;
 

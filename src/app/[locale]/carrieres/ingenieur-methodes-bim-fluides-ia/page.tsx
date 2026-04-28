@@ -25,7 +25,7 @@ type Props = {
 
 const jobTitle =
   "Ingénieur(e) Méthodes de Modélisation et Expert(e) BIM Fluides (CVC/MEP) – Orienté(e) IA et Data";
-const applyEmail = "contact@elouatikifreres.com";
+const applyEmail = "rh@elouatikifreres.com";
 const applySubject = "Candidature : Ingénieur BIM Fluides et IA";
 const applyHref = `mailto:${applyEmail}?subject=${encodeURIComponent(applySubject)}`;
 

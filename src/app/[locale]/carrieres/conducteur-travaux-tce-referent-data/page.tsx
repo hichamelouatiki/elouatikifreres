@@ -25,7 +25,7 @@ type Props = {
 };
 
 const jobTitle = "🏗️ Conducteur de Travaux TCE et Référent Data Chantier (H/F)";
-const applyEmail = "contact@elouatikifreres.com";
+const applyEmail = "rh@elouatikifreres.com";
 const applySubject = "Candidature : Conducteur de Travaux TCE et Référent Data";
 const applyHref = `mailto:${applyEmail}?subject=${encodeURIComponent(applySubject)}`;
 

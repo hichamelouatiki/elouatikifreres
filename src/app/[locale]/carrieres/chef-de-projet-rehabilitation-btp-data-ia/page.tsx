@@ -25,7 +25,7 @@ type Props = {
 };
 
 const jobTitle = "Chef de Projet Réhabilitation BTP – Orienté(e) Data et IA (H/F)";
-const applyEmail = "contact@elouatikifreres.com";
+const applyEmail = "rh@elouatikifreres.com";
 const applySubject = "Candidature : Chef de Projet Réhabilitation et IA";
 const applyHref = `mailto:${applyEmail}?subject=${encodeURIComponent(applySubject)}`;
 

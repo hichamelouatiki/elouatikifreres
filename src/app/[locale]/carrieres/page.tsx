@@ -131,7 +131,7 @@ export default async function CareersPage({ params }: Props) {
             </p>
             <div className="mt-9">
               <a
-                href="mailto:contact@elouatikifreres.com?subject=Candidature%20spontan%C3%A9e%20-%20El%20Ouatiki%20Fr%C3%A8res"
+                href="mailto:rh@elouatikifreres.com?subject=Candidature%20spontan%C3%A9e%20-%20El%20Ouatiki%20Fr%C3%A8res"
                 className="inline-flex min-h-12 items-center justify-center gap-2 rounded-full border border-slate-950/20 bg-white/50 px-6 text-base font-semibold text-slate-950 shadow-sm backdrop-blur transition hover:-translate-y-0.5 hover:border-slate-950 hover:bg-white hover:shadow-lg"
               >
                 <Send className="size-4" aria-hidden />
@@ -224,7 +224,7 @@ export default async function CareersPage({ params }: Props) {
                             </Link>
                           ) : (
                             <a
-                              href={`mailto:contact@elouatikifreres.com?subject=Candidature%20-%20${encodeURIComponent(job.title)}`}
+                              href={`mailto:rh@elouatikifreres.com?subject=Candidature%20-%20${encodeURIComponent(job.title)}`}
                               className={`inline-flex min-h-11 shrink-0 items-center justify-center gap-2 rounded-full px-4 text-sm font-semibold transition duration-300 group-hover:-translate-y-0.5 ${accent.button}`}
                             >
                               Découvrir le poste
