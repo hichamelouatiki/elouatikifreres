@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Carte « Livraison & Jumeau Numérique » + drawer (DOE, réception, exploitation).
+ * Carte « Livraison et Jumeau Numérique » + drawer (DOE, réception, exploitation).
  * Même pattern portail + Framer Motion que les autres feature cards.
  */
 

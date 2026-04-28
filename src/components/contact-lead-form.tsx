@@ -48,6 +48,34 @@ const WF = {
 } as const;
 
 const MAX_ATTACHMENT_BYTES = 15 * 1024 * 1024;
+const MAX_NAME_LENGTH = 120;
+const MAX_COMPANY_LENGTH = 160;
+const MAX_EMAIL_LENGTH = 254;
+const MAX_PHONE_LENGTH = 40;
+const MAX_MESSAGE_LENGTH = 2000;
+const ALLOWED_ATTACHMENT_EXTENSIONS = new Set([
+  "pdf",
+  "doc",
+  "docx",
+  "zip",
+  "rar",
+  "dwg",
+  "jpg",
+  "jpeg",
+  "png",
+]);
+const ALLOWED_ATTACHMENT_TYPES = new Set([
+  "",
+  "application/pdf",
+  "application/msword",
+  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
+  "application/zip",
+  "application/x-zip-compressed",
+  "application/vnd.rar",
+  "application/x-rar-compressed",
+  "image/jpeg",
+  "image/png",
+]);
 
 /** Regex email pragmatique (format courant professionnel). */
 const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
@@ -110,6 +138,22 @@ function countDigits(value: string): number {
   return value.replace(/\D/g, "").length;
 }
 
+function normalizeField(value: string, maxLength: number): string {
+  return value.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim().slice(0, maxLength);
+}
+
+function getFileExtension(fileName: string): string {
+  return fileName.split(".").pop()?.toLowerCase() ?? "";
+}
+
+function isAllowedAttachment(file: File): boolean {
+  return (
+    file.size <= MAX_ATTACHMENT_BYTES &&
+    ALLOWED_ATTACHMENT_EXTENSIONS.has(getFileExtension(file.name)) &&
+    ALLOWED_ATTACHMENT_TYPES.has(file.type)
+  );
+}
+
 export function ContactLeadForm() {
   const t = useTranslations("Form");
 
@@ -166,12 +210,18 @@ export function ContactLeadForm() {
 
   const handleAttachment = useCallback(
     (file: File | null) => {
-      setAttachment(file);
       clearError("attachment");
 
-      if (file && file.size > MAX_ATTACHMENT_BYTES) {
+      if (file && !isAllowedAttachment(file)) {
+        setAttachment(null);
+        if (fileInputRef.current) {
+          fileInputRef.current.value = "";
+        }
         setErrors((prev) => ({ ...prev, attachment: t("errAttachment") }));
+        return;
       }
+
+      setAttachment(file);
     },
     [clearError, t],
   );
@@ -193,24 +243,28 @@ export function ContactLeadForm() {
     if (!budget) {
       next.budget = t("errBudget");
     }
-    if (!name.trim()) {
+    const safeName = normalizeField(name, MAX_NAME_LENGTH);
+    const safeCompany = normalizeField(company, MAX_COMPANY_LENGTH);
+    const safeEmail = normalizeField(email, MAX_EMAIL_LENGTH).toLowerCase();
+    const safePhone = normalizeField(phone, MAX_PHONE_LENGTH);
+
+    if (!safeName) {
       next.name = t("errName");
     }
-    if (!company.trim()) {
+    if (!safeCompany) {
       next.company = t("errCompany");
     }
-    const emailTrim = email.trim();
-    if (!emailTrim) {
+    if (!safeEmail) {
       next.email = t("errEmailRequired");
-    } else if (!EMAIL_REGEX.test(emailTrim)) {
+    } else if (!EMAIL_REGEX.test(safeEmail)) {
       next.email = t("errEmailFormat");
     }
-    if (!phone.trim()) {
+    if (!safePhone) {
       next.phone = t("errPhoneRequired");
-    } else if (countDigits(phone) < 10) {
+    } else if (countDigits(safePhone) < 10) {
       next.phone = t("errPhoneDigits");
     }
-    if (attachment && attachment.size > MAX_ATTACHMENT_BYTES) {
+    if (attachment && !isAllowedAttachment(attachment)) {
       next.attachment = t("errAttachment");
     }
 
@@ -223,12 +277,12 @@ export function ContactLeadForm() {
       Boolean(
         projectType &&
           budget &&
-          name.trim() &&
-          company.trim() &&
-          EMAIL_REGEX.test(email.trim()) &&
-          phone.trim() &&
-          countDigits(phone) >= 10 &&
-          (!attachment || attachment.size <= MAX_ATTACHMENT_BYTES),
+          normalizeField(name, MAX_NAME_LENGTH) &&
+          normalizeField(company, MAX_COMPANY_LENGTH) &&
+          EMAIL_REGEX.test(normalizeField(email, MAX_EMAIL_LENGTH).toLowerCase()) &&
+          normalizeField(phone, MAX_PHONE_LENGTH) &&
+          countDigits(normalizeField(phone, MAX_PHONE_LENGTH)) >= 10 &&
+          (!attachment || isAllowedAttachment(attachment)),
       ),
     [attachment, budget, company, email, name, phone, projectType],
   );
@@ -278,6 +332,12 @@ export function ContactLeadForm() {
 
     setIsSubmitting(true);
 
+    const safeName = normalizeField(name, MAX_NAME_LENGTH);
+    const safeCompany = normalizeField(company, MAX_COMPANY_LENGTH);
+    const safeEmail = normalizeField(email, MAX_EMAIL_LENGTH).toLowerCase();
+    const safePhone = normalizeField(phone, MAX_PHONE_LENGTH);
+    const safeMessage = normalizeField(message, MAX_MESSAGE_LENGTH);
+
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
     if (!accessKey) {
       setResultMessage(t("configError"));
@@ -289,14 +349,14 @@ export function ContactLeadForm() {
     formData.set("access_key", accessKey);
     formData.set("subject", t("subject"));
     formData.set("from_name", t("fromName"));
-    formData.set("replyto", email.trim());
-    formData.set(WF.name, name.trim());
-    formData.set(WF.company, company.trim());
-    formData.set(WF.email, email.trim());
-    formData.set(WF.phone, phone.trim());
+    formData.set("replyto", safeEmail);
+    formData.set(WF.name, safeName);
+    formData.set(WF.company, safeCompany);
+    formData.set(WF.email, safeEmail);
+    formData.set(WF.phone, safePhone);
     formData.set(WF.projectType, projectType);
     formData.set(WF.budget, budget);
-    formData.set(WF.message, message.trim());
+    formData.set(WF.message, safeMessage);
     formData.set("botcheck", "");
 
     if (attachment) {
@@ -327,7 +387,7 @@ export function ContactLeadForm() {
           fileInputRef.current.value = "";
         }
       } else {
-        setResultMessage(data.message ?? t("sendFailed"));
+        setResultMessage(t("sendFailed"));
       }
     } catch {
       setResultMessage(t("networkError"));
@@ -537,10 +597,11 @@ export function ContactLeadForm() {
                 <textarea
                   id="lead-message"
                   rows={5}
+                  maxLength={MAX_MESSAGE_LENGTH}
                   placeholder={t("placeholderMessageOptional")}
                   value={message}
                   onChange={(e) => {
-                    setMessage(e.target.value);
+                    setMessage(e.target.value.slice(0, MAX_MESSAGE_LENGTH));
                     clearError("message");
                   }}
                   className={cn(baseTextarea, normalBorder)}
@@ -645,10 +706,11 @@ export function ContactLeadForm() {
                     id="lead-name"
                     type="text"
                     autoComplete="name"
+                    maxLength={MAX_NAME_LENGTH}
                     placeholder={t("placeholderName")}
                     value={name}
                     onChange={(e) => {
-                      setName(e.target.value);
+                      setName(e.target.value.slice(0, MAX_NAME_LENGTH));
                       clearError("name");
                     }}
                     className={cn(baseInput, errors.name ? errorBorder : normalBorder)}
@@ -671,10 +733,11 @@ export function ContactLeadForm() {
                     id="lead-company"
                     type="text"
                     autoComplete="organization"
+                    maxLength={MAX_COMPANY_LENGTH}
                     placeholder={t("placeholderCompany")}
                     value={company}
                     onChange={(e) => {
-                      setCompany(e.target.value);
+                      setCompany(e.target.value.slice(0, MAX_COMPANY_LENGTH));
                       clearError("company");
                     }}
                     className={cn(baseInput, errors.company ? errorBorder : normalBorder)}
@@ -697,10 +760,11 @@ export function ContactLeadForm() {
                     id="lead-email"
                     type="email"
                     autoComplete="email"
+                    maxLength={MAX_EMAIL_LENGTH}
                     placeholder={t("placeholderEmail")}
                     value={email}
                     onChange={(e) => {
-                      setEmail(e.target.value);
+                      setEmail(e.target.value.slice(0, MAX_EMAIL_LENGTH));
                       clearError("email");
                     }}
                     className={cn(baseInput, errors.email ? errorBorder : normalBorder)}
@@ -723,10 +787,11 @@ export function ContactLeadForm() {
                     id="lead-phone"
                     type="tel"
                     autoComplete="tel"
+                    maxLength={MAX_PHONE_LENGTH}
                     placeholder={t("placeholderPhone")}
                     value={phone}
                     onChange={(e) => {
-                      setPhone(e.target.value);
+                      setPhone(e.target.value.slice(0, MAX_PHONE_LENGTH));
                       clearError("phone");
                     }}
                     className={cn(baseInput, errors.phone ? errorBorder : normalBorder)}

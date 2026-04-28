@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Carte « Pilotage & Logistique » + panneau latéral riche (Gantt / flux animé).
+ * Carte « Pilotage et Logistique » + panneau latéral riche (Gantt / flux animé).
  * Le drawer est rendu via portail pour rester conforme au DOM (ul > li uniquement).
  */
 

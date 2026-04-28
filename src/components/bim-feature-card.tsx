@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Carte « Conception Intelligente & BIM » + drawer dédié (visuel clash).
+ * Carte « Conception Intelligente et BIM » + drawer dédié (visuel clash).
  * Même pattern que LogisticsFeatureCard pour cohérence d’équipe.
  */
 

@@ -1,6 +1,7 @@
 import { setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 
+import { BimVsRealitySlider } from "@/components/bim-vs-reality-slider";
 import { ConsultingSection } from "@/components/consulting-section";
 import { ContactSection } from "@/components/contact-section";
 import { HeroSection } from "@/components/hero-section";
@@ -30,6 +31,7 @@ export default async function HomePage({ params }: Props) {
     <main className="overflow-x-hidden bg-zinc-950">
       <HeroSection />
       <MethodSection />
+      <BimVsRealitySlider />
       <ConsultingSection />
       <OurStorySection />
       <div id="methodologie" className="scroll-mt-24">

@@ -2,7 +2,7 @@
 
 /**
  * Section « Ils nous font confiance » : bandeau infini.
- * N&B partout sauf dans une fenêtre horizontale centrée sur le viewport (couleur pleine au centre,
+ * Noir et blanc partout sauf dans une fenêtre horizontale centrée sur le viewport (couleur pleine au centre,
  * retour progressif au gris en sortant de la fenêtre).
  */
 
@@ -159,7 +159,7 @@ export function PartnerCarousel({ className }: { className?: string }) {
       setActiveLogoIndex(logicalIndex);
     }
 
-    // 2) Appliquer: un seul logo en couleur (fenêtre centrée), tous les autres en N&B
+    // 2) Appliquer: un seul logo en couleur (fenêtre centrée), tous les autres en noir et blanc
     for (let i = 0; i < count; i++) {
       const el = refs[i];
       if (!el) continue;

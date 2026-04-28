@@ -46,7 +46,7 @@ jobs:
           server-dir: /domains/elouatikifreres.com/public_html/
           # On ne supprime pas les fichiers distants pour éviter les erreurs de droits
           dangerous-clean-slate: false
-          # Option pour ignorer les erreurs de certificats SSL si besoin
-          protocol: ftp
+          # Utilise FTPS pour chiffrer les identifiants et le transfert.
+          protocol: ftps
           # Hostinger peut fermer lentement le canal de contrôle pendant une synchro complète
           timeout: 120000

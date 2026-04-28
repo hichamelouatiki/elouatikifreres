@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Carte « Réalisation Connectée & Suivi 360° » + drawer Computer Vision / IoT.
+ * Carte « Réalisation Connectée et Suivi 360° » + drawer Computer Vision / IoT.
  * Même pattern portail + Framer Motion que BIM / Logistique.
  */
 
@@ -9,13 +9,14 @@ import { useEffect, useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { AnimatePresence, motion } from "framer-motion";
 import { Camera, ChevronRight, Cpu, TabletSmartphone, X } from "lucide-react";
+import Image from "next/image";
 import { useTranslations } from "next-intl";
 
-import { ComputerVisionVisual } from "@/components/computer-vision-visual";
 import { FadeUp } from "@/components/fade-up";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { cn } from "@/lib/utils";
+import suivi360Image from "../../media/image_suivi_360.png";
 
 export type TrackingFeatureCardProps = {
   open: boolean;
@@ -82,7 +83,13 @@ export function TrackingFeatureCard({
             </div>
 
             <div className="relative mb-8 aspect-video w-full overflow-hidden rounded-2xl bg-zinc-950 ring-1 ring-white/10">
-              <ComputerVisionVisual />
+              <Image
+                src={suivi360Image}
+                alt={t("drawerTitle")}
+                className="h-auto w-full object-cover"
+                sizes="(min-width: 640px) 552px, calc(100vw - 40px)"
+                priority={open}
+              />
               <div className="pointer-events-none absolute inset-0 bg-gradient-to-t from-zinc-950/80 via-transparent to-transparent" />
               <div className="absolute left-3 top-3 sm:left-4 sm:top-4">
                 <span className="inline-flex items-center rounded-full border border-emerald-500/40 bg-emerald-500/15 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-emerald-100 backdrop-blur-md sm:text-xs">

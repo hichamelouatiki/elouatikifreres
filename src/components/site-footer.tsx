@@ -5,12 +5,14 @@
 import { SiteLogo, SITE_LOGO_FOOTER_DISPLAY } from "@/components/site-logo";
 import {
   Camera,
-  Link,
+  Link as LinkIcon,
   Mail,
   MapPin,
   Play,
   Phone,
 } from "lucide-react";
+
+import { Link } from "@/i18n/navigation";
 
 export function SiteFooter() {
   return (
@@ -34,7 +36,7 @@ export function SiteFooter() {
                 aria-label="LinkedIn"
                 className="inline-flex size-10 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-zinc-300 transition hover:border-cyan-400/40 hover:text-white"
               >
-                <Link className="size-5" aria-hidden />
+                <LinkIcon className="size-5" aria-hidden />
               </a>
               <a
                 href="#"
@@ -66,7 +68,7 @@ export function SiteFooter() {
               </li>
               <li>
                 <a className="transition hover:text-white" href="#">
-                  Gros Œuvre &amp; Construction
+                  Gros Œuvre et Construction
                 </a>
               </li>
               <li>
@@ -104,9 +106,9 @@ export function SiteFooter() {
                 </a>
               </li>
               <li>
-                <a className="transition hover:text-white" href="#">
+                <Link className="transition hover:text-white" href="/carrieres">
                   Carrières / Recrutement
-                </a>
+                </Link>
               </li>
               <li>
                 <a className="transition hover:text-white" href="#">
@@ -148,7 +150,7 @@ export function SiteFooter() {
                 <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-green-200/90">
                   <MapPin className="size-4" aria-hidden />
                 </span>
-                <span>Zone d&apos;intervention : Maroc &amp; International</span>
+                <span>Zone d&apos;intervention : Maroc et International</span>
               </li>
             </ul>
           </div>
