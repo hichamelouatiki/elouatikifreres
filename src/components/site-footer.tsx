@@ -166,9 +166,6 @@ export function SiteFooter() {
             <a className="transition hover:text-white" href="/fr/politique-de-confidentialite/">
               Politique de Confidentialité / RGPD / Loi 09-08 (Maroc)
             </a>
-            <a className="transition hover:text-white" href="#">
-              Gestion des Cookies
-            </a>
           </div>
         </div>
       </div>
