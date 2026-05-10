@@ -75,8 +75,8 @@ export async function DamInspectionArticle() {
           suffisent plus à garantir une sécurité optimale. Récemment, nos équipes
           ont déployé une solution de pointe alliant{" "}
           <strong className="font-semibold text-white">drones de haute technologie</strong>{" "}
-          et <strong className="font-semibold text-white">Deep Learning</strong> pour
-          transformer radicalement l&apos;inspection de ces colosses. Voici comment
+          et <strong className="font-semibold text-white">Deep Learning</strong>
+          {" "}pour transformer radicalement l&apos;inspection de ces colosses. Voici comment
           nous redéfinissons les standards de la maintenance prédictive.
         </p>
       </header>
@@ -131,8 +131,8 @@ export async function DamInspectionArticle() {
         </h2>
         <p className="leading-relaxed text-zinc-300">
           Pour cette réalisation,{" "}
-          <strong className="font-semibold text-white">Elouatiki Frères</strong> n&apos;a
-          pas simplement « pris des photos ». Nous avons déployé un véritable
+          <strong className="font-semibold text-white">Elouatiki Frères</strong>
+          {" "}n&apos;a pas simplement « pris des photos ». Nous avons déployé un véritable
           laboratoire volant capable d&apos;évoluer dans des environnements
           hostiles. À proximité d&apos;un barrage, les turbulences aérologiques et
           les perturbations magnétiques dues aux transformateurs haute tension
@@ -142,12 +142,12 @@ export async function DamInspectionArticle() {
           Nos pilotes spécialisés utilisent des vecteurs{" "}
           <strong className="font-semibold text-white">DJI Matrice 350 RTK</strong>.
           Équipé d&apos;une nacelle plein format de{" "}
-          <strong className="font-semibold text-white">45 mégapixels</strong> (Zenmuse
-          P1), ce drone capture des détails invisibles à l&apos;œil nu depuis le
+          <strong className="font-semibold text-white">45 mégapixels</strong>
+          {" "}(Zenmuse P1), ce drone capture des détails invisibles à l&apos;œil nu depuis le
           sol. Pour les zones où la géométrie de la paroi est complexe ou masquée
           par la végétation, nous intégrons des capteurs{" "}
-          <strong className="font-semibold text-white">LiDAR</strong> pour
-          cartographier la structure avec une précision millimétrique. Là où
+          <strong className="font-semibold text-white">LiDAR</strong>
+          {" "}pour cartographier la structure avec une précision millimétrique. Là où
           l&apos;inspection classique voit une paroi grise uniforme, notre
           technologie documente la « peau » du béton, créant une base de données
           brute d&apos;une densité inédite.
@@ -243,8 +243,8 @@ export async function DamInspectionArticle() {
             <strong className="font-semibold text-white">Elouatiki Frères</strong>{" "}
             devient disruptive. Analyser manuellement 5 000 photos haute résolution
             prendrait des semaines. Nos algorithmes de{" "}
-            <strong className="font-semibold text-white">Deep Learning</strong> le
-            font en quelques heures avec une rigueur infatigable. Nous utilisons
+            <strong className="font-semibold text-white">Deep Learning</strong>
+            {" "}le font en quelques heures avec une rigueur infatigable. Nous utilisons
             deux approches complémentaires :
           </p>
           <ul className="list-disc space-y-3 pl-6 text-zinc-300 marker:text-cyan-400">
