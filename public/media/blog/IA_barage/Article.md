@@ -11,7 +11,7 @@ pressions hydrostatiques extrêmes, des cycles de gel-dégel et une
 Chez **Elouatiki Frères**, nous avons compris que les méthodes
 d\'inspection traditionnelles ne suffisent plus à garantir une sécurité
 optimale. Récemment, nos équipes ont déployé une solution de pointe
-alliant **drones de haute technologie** et **Deep Learning** pour
+alliant **drones de haute technologie** et **Deep Learning**  pour
 transformer radicalement l\'inspection de ces colosses. Voici comment
 nous redéfinissons les standards de la maintenance prédictive.
 
@@ -48,7 +48,7 @@ Nos pilotes spécialisés utilisent des vecteurs **DJI Matrice 350 RTK**.
 Équipé d\'une nacelle plein format de **45 mégapixels** (Zenmuse P1), ce
 drone capture des détails invisibles à l\'œil nu depuis le sol. Pour les
 zones où la géométrie de la paroi est complexe ou masquée par la
-végétation, nous intégrons des capteurs **LiDAR** pour cartographier la
+végétation, nous intégrons des capteurs **LiDAR**  pour cartographier la
 structure avec une précision millimétrique. Là où l\'inspection
 classique voit une paroi grise uniforme, notre technologie documente la
 \"peau\" du béton, créant une base de données brute d\'une densité
