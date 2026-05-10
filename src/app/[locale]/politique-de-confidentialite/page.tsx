@@ -39,11 +39,11 @@ export default async function PolitiqueConfidentialitePage({ params }: Props) {
           </h1>
           <p className="text-zinc-400">
             Conforme au{" "}
-            <span className="font-semibold text-white">RGPD</span> (Règlement
-            européen 2016/679) et à la{" "}
-            <span className="font-semibold text-white">Loi 09-08</span> relative
-            à la protection des personnes physiques à l&apos;égard du traitement
-            des données à caractère personnel (Maroc).
+            <span className="font-semibold text-white">RGPD</span>
+            {" "}(Règlement européen 2016/679) et à la{" "}
+            <span className="font-semibold text-white">Loi 09-08</span>
+            {" "}relative à la protection des personnes physiques à l&apos;égard
+            du traitement des données à caractère personnel (Maroc).
           </p>
           <p className="text-sm text-zinc-500">
             Dernière mise à jour : avril 2025
@@ -371,8 +371,8 @@ export default async function PolitiqueConfidentialitePage({ params }: Props) {
                 En cas de violation de données susceptible d&apos;engendrer un risque
                 pour vos droits et libertés, nous procéderons à la notification
                 dans les délais réglementaires auprès de la{" "}
-                <strong className="text-white">CNDP</strong> (72 h — RGPD) et
-                vous en informerons si nécessaire.
+                <strong className="text-white">CNDP</strong>
+                {" "}(72 h — RGPD) et vous en informerons si nécessaire.
               </p>
             </Prose>
           </section>
@@ -420,8 +420,9 @@ export default async function PolitiqueConfidentialitePage({ params }: Props) {
                 traitements de données à caractère personnel mis en œuvre par
                 El Ouatiki Frères ont fait l&apos;objet des formalités requises auprès
                 de la{" "}
-                <strong className="text-white">CNDP</strong> (déclaration ou
-                demande d&apos;autorisation selon la nature du traitement).
+                <strong className="text-white">CNDP</strong>
+                {" "}(déclaration ou demande d&apos;autorisation selon la nature
+                du traitement).
               </p>
               <p>
                 Si vous estimez que vos droits ne sont pas respectés, vous

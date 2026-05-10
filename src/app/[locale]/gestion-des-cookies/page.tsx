@@ -91,7 +91,8 @@ export default function GestionDesCookiesPage() {
           </p>
           <p className="text-sm text-zinc-500">
             Conformément au{" "}
-            <strong className="text-white">RGPD</strong> et à la{" "}
+            <strong className="text-white">RGPD</strong>
+            {" "}et à la{" "}
             <strong className="text-white">Loi 09-08 (Maroc)</strong>.
           </p>
         </div>
