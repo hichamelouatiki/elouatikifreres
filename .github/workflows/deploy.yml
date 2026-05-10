@@ -32,7 +32,7 @@ jobs:
       - name: 🏗️ Build static site
         run: npm run build
         env:
-          NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY: ${{ secrets.WEB3FORMS_ACCESS_KEY }}
+          # WEB3FORMS_ACCESS_KEY n'est JAMAIS passé ici — elle reste dans les variables du Worker Cloudflare.
           NEXT_PUBLIC_TURNSTILE_SITE_KEY: ${{ secrets.TURNSTILE_SITE_KEY }}
           NEXT_PUBLIC_CONTACT_ENDPOINT: ${{ secrets.CONTACT_ENDPOINT }}
 

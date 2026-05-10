@@ -31,12 +31,17 @@ Le formulaire de contact utilise Web3Forms (envoi) protégé par Cloudflare Turn
 Crée un fichier `.env.local` (non commité) :
 
 ```env
-# Clé Web3Forms — récupérer sur web3forms.com
-NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=ta_cle_web3forms
+# Clé Web3Forms — SECRETE. Sans préfixe NEXT_PUBLIC_ : ne doit JAMAIS atterrir
+# dans le bundle client. À placer ici uniquement pour la route /api/contact en dev.
+# En production, cette clé vit côté Worker Cloudflare (variable du Worker).
+WEB3FORMS_ACCESS_KEY=ta_cle_web3forms
 
 # Site Key Turnstile — récupérer sur dash.cloudflare.com → Turnstile → Add site
 # Type de widget : Managed. Cette clé est publique (pas de risque à l'exposer).
 NEXT_PUBLIC_TURNSTILE_SITE_KEY=ta_site_key_turnstile
+
+# Endpoint du Worker Cloudflare (proxy sécurisé Web3Forms).
+NEXT_PUBLIC_CONTACT_ENDPOINT=https://contact-proxy.<sous-domaine>.workers.dev
 ```
 
 ### Secrets GitHub Actions (Settings → Secrets → Actions)

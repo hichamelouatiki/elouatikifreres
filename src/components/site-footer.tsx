@@ -111,9 +111,9 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <a className="transition hover:text-white" href="#">
+                <Link className="transition hover:text-white" href="/blog-et-actualites">
                   Blog / Actualités
-                </a>
+                </Link>
               </li>
             </ul>
           </nav>

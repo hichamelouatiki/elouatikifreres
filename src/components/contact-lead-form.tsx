@@ -6,9 +6,9 @@
  * - Autres `name` : clés stables (underscores) pour l’e-mail admin + récap autoresponder.
  * Qualification progressive pour réduire la friction avant les coordonnées.
  *
- * Clé API : définir NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY dans `.env.local` (ne jamais committer la clé).
- * Protection anti-spam : Cloudflare Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY) validé côté serveur
- * par Web3Forms via le champ `cf-turnstile-response`. Sans token valide, Web3Forms refuse la soumission.
+ * Clé API : stockée uniquement dans les variables d'environnement du Worker Cloudflare (jamais exposée au client).
+ * Protection anti-spam : Cloudflare Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY) validé côté serveur par le Worker.
+ * Endpoint : NEXT_PUBLIC_CONTACT_ENDPOINT doit pointer vers le Worker Cloudflare (jamais directement vers Web3Forms).
  * Autoresponder : activer dans le tableau de bord Web3Forms pour ce formulaire.
  */
 
@@ -59,13 +59,11 @@ const WF = {
 
 /**
  * Endpoint de soumission du formulaire.
- * - Mode export statique (Hostinger) : pointe directement vers Web3Forms.
- * - Mode serveur (Vercel/VPS) : pointer vers "/api/contact" pour cacher la clé.
- *   → Définir NEXT_PUBLIC_CONTACT_ENDPOINT=/api/contact dans .env.local
- *     et activer src/_server/contact-route.ts (voir instructions dans ce fichier).
+ * Doit impérativement pointer vers le Worker Cloudflare (proxy sécurisé).
+ * La clé Web3Forms est ajoutée côté serveur par le Worker — jamais ici.
+ * → Définir NEXT_PUBLIC_CONTACT_ENDPOINT=https://<worker>.workers.dev dans .env.local et en CI.
  */
-const CONTACT_ENDPOINT =
-  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "https://api.web3forms.com/submit";
+const CONTACT_ENDPOINT = process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "";
 
 /** Longueurs max pour les attributs HTML maxLength (UI uniquement). */
 const MAX_NAME_LENGTH = 120;
@@ -316,17 +314,15 @@ export function ContactLeadForm() {
       return;
     }
 
+    if (!CONTACT_ENDPOINT) {
+      setResultMessage(t("configError"));
+      return;
+    }
+
     setIsSubmitting(true);
 
     const { name: safeName, company: safeCompany, email: safeEmail, phone: safePhone, message: safeMessage } =
       parseResult.data;
-
-    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
-    if (!accessKey) {
-      setResultMessage(t("configError"));
-      setIsSubmitting(false);
-      return;
-    }
 
     if (!turnstileToken) {
       setResultMessage(t("captchaError"));
@@ -335,7 +331,6 @@ export function ContactLeadForm() {
     }
 
     const formData = new FormData();
-    formData.set("access_key", accessKey);
     formData.set("cf-turnstile-response", turnstileToken);
     formData.set("subject", t("subject"));
     formData.set("from_name", t("fromName"));

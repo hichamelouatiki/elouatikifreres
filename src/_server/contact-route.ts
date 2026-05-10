@@ -23,6 +23,12 @@ import { NextResponse } from "next/server";
 import type { NextRequest } from "next/server";
 import { z } from "zod";
 
+import {
+  ALLOWED_ATTACHMENT_EXTENSIONS,
+  ALLOWED_ATTACHMENT_TYPES,
+  MAX_ATTACHMENT_BYTES,
+} from "@/lib/contact-schema";
+
 // ─────────────────────────────────────────────
 // Configuration
 // ─────────────────────────────────────────────
@@ -106,6 +112,20 @@ function isAllowedOrigin(req: NextRequest): boolean {
   return false;
 }
 
+function getFileExtension(fileName: string): string {
+  const parts = fileName.split(".");
+  return parts.length > 1 ? (parts.pop() ?? "").toLowerCase() : "";
+}
+
+function isAllowedAttachment(file: File): boolean {
+  return (
+    file.size > 0 &&
+    file.size <= MAX_ATTACHMENT_BYTES &&
+    ALLOWED_ATTACHMENT_EXTENSIONS.has(getFileExtension(file.name)) &&
+    ALLOWED_ATTACHMENT_TYPES.has(file.type)
+  );
+}
+
 // ─────────────────────────────────────────────
 // Handler POST
 // ─────────────────────────────────────────────
@@ -139,8 +159,21 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // 4. Validation Zod des champs
-  const rawObject = Object.fromEntries(rawBody.entries());
+  // 4. Honeypot — un humain laisse `botcheck` vide. Si rempli, c'est un bot :
+  // on répond silencieusement 200 sans rien relayer (pas d'indice donné au bot).
+  const botcheck = rawBody.get("botcheck");
+  if (typeof botcheck === "string" && botcheck.trim() !== "") {
+    return NextResponse.json(
+      { success: true, message: "Message envoyé avec succès" },
+      { status: 200 },
+    );
+  }
+
+  // 5. Validation Zod des champs (texte uniquement — les Files sont validés séparément)
+  const rawObject: Record<string, FormDataEntryValue> = {};
+  for (const [key, value] of rawBody.entries()) {
+    if (typeof value === "string") rawObject[key] = value;
+  }
   const parsed = contactBodySchema.safeParse(rawObject);
 
   if (!parsed.success) {
@@ -150,7 +183,17 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     );
   }
 
-  // 5. Ajout de la clé côté serveur (jamais exposée au client)
+  // 6. Validation pièces jointes — défense en profondeur (le client peut être contourné).
+  for (const value of rawBody.values()) {
+    if (value instanceof File && !isAllowedAttachment(value)) {
+      return NextResponse.json(
+        { success: false, message: "Pièce jointe non autorisée" },
+        { status: 422 },
+      );
+    }
+  }
+
+  // 7. Ajout de la clé côté serveur (jamais exposée au client)
   const accessKey = process.env.WEB3FORMS_ACCESS_KEY;
   if (!accessKey) {
     console.error("[contact/route] WEB3FORMS_ACCESS_KEY manquante");
@@ -164,9 +207,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
   secureFormData.set("access_key", accessKey);
 
   for (const [key, value] of rawBody.entries()) {
-    if (key !== "access_key") {
-      secureFormData.set(key, value);
+    // Ne jamais relayer la clé client, le token Turnstile, ni le honeypot.
+    if (key === "access_key" || key === "cf-turnstile-response" || key === "botcheck") {
+      continue;
     }
+    secureFormData.set(key, value);
   }
 
   // 6. Relais vers Web3Forms avec timeout
@@ -186,7 +231,11 @@ export async function POST(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json(json, { status: upstream.status });
   } catch (err) {
     const isTimeout = err instanceof Error && err.name === "AbortError";
-    console.error("[contact/route] Erreur relais Web3Forms :", err);
+    // Logger uniquement le type d'erreur — jamais la stack complète en production.
+    console.error(
+      "[contact/route] Erreur relais Web3Forms :",
+      isTimeout ? "timeout" : (err instanceof Error ? err.message : "unknown"),
+    );
 
     return NextResponse.json(
       { success: false, message: isTimeout ? "Délai dépassé" : "Erreur réseau" },

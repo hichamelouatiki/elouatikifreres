@@ -98,48 +98,45 @@ export default function GestionDesCookiesPage() {
 
         <div className="space-y-6">
 
-          {/* Cookies essentiels — toujours actifs */}
+          {/* Stockage local essentiel — strictement nécessaire */}
           <CookieCard
             icon={<ShieldCheck className="size-5 text-emerald-400" />}
             accent="emerald"
-            title="Cookies essentiels"
-            tag="Toujours actifs"
+            title="Stockage essentiel"
+            tag="Toujours actif"
             tagColor="emerald"
-            description="Indispensables au fonctionnement du site. Ils permettent la navigation sécurisée, la gestion de la session et l'accès aux fonctionnalités de base. Ils ne peuvent pas être désactivés."
+            description="Strictement nécessaire au fonctionnement du site. Il s'agit ici d'un stockage local du navigateur (localStorage) et non d'un cookie HTTP : aucune donnée n'est transmise au serveur. Ne peut pas être désactivé car indispensable à la mémorisation de votre choix sur cette page."
             cookies={[
-              { name: "session", purpose: "Maintien de la session utilisateur", duration: "Session", provider: "elouatikifreres.com" },
-              { name: "__csrf", purpose: "Protection contre les attaques CSRF", duration: "Session", provider: "elouatikifreres.com" },
+              {
+                name: "cookie_consent",
+                purpose: "Mémorise votre choix de consentement (localStorage du navigateur)",
+                duration: "Permanent (jusqu'à effacement par l'utilisateur)",
+                provider: "elouatikifreres.com",
+              },
             ]}
             checked={true}
             disabled={true}
             onChange={() => {}}
           />
 
-          {/* Cookies analytiques */}
+          {/* Cookies analytiques — non déposés actuellement, conservé pour conformité future */}
           <CookieCard
             icon={<Info className="size-5 text-cyan-400" />}
             accent="cyan"
             title="Cookies analytiques"
-            description="Nous permettent de mesurer l'audience et d'analyser le comportement des visiteurs (pages vues, durée de visite, provenance). Ces données sont anonymisées et ne permettent pas de vous identifier personnellement."
-            cookies={[
-              { name: "_ga", purpose: "Identifiant unique de visiteur Google Analytics", duration: "13 mois", provider: "Google LLC" },
-              { name: "_gid", purpose: "Identifiant de session Google Analytics", duration: "24 heures", provider: "Google LLC" },
-              { name: "_gat", purpose: "Limitation du taux de requêtes", duration: "1 minute", provider: "Google LLC" },
-            ]}
+            description="Non déposés actuellement. Cette catégorie est désactivée par défaut et restera inactive tant qu'aucun outil de mesure d'audience (ex. Google Analytics) ne sera intégré au site. Vos préférences ci-dessous seront respectées si nous activons un jour ces outils."
+            cookies={[]}
             checked={loaded ? consent.analytics : false}
             onChange={(val) => setConsent((c) => ({ ...c, analytics: val }))}
           />
 
-          {/* Cookies de préférences */}
+          {/* Cookies de préférences — non déposés actuellement */}
           <CookieCard
             icon={<Cookie className="size-5 text-orange-400" />}
             accent="orange"
             title="Cookies de préférences"
-            description="Permettent de mémoriser vos choix (langue, région, affichage) pour personnaliser votre expérience lors de vos prochaines visites."
-            cookies={[
-              { name: "locale", purpose: "Mémorisation de la langue choisie (fr / en / ar)", duration: "12 mois", provider: "elouatikifreres.com" },
-              { name: "theme", purpose: "Préférence d'affichage", duration: "12 mois", provider: "elouatikifreres.com" },
-            ]}
+            description="Non déposés actuellement. La langue est gérée via l'URL (/fr, /en, /ar) sans cookie. Cette catégorie est conservée pour vous permettre de pré-paramétrer votre choix au cas où nous ajouterions plus tard des préférences persistantes (thème, affichage, etc.)."
+            cookies={[]}
             checked={loaded ? consent.preferences : false}
             onChange={(val) => setConsent((c) => ({ ...c, preferences: val }))}
           />
@@ -298,36 +295,42 @@ function CookieCard({
         </button>
       </div>
 
-      {/* Tableau des cookies */}
-      <div className="overflow-x-auto rounded-xl border border-white/8">
-        <table className="w-full text-xs">
-          <thead>
-            <tr className="border-b border-white/8 bg-white/5">
-              {["Nom", "Finalité", "Durée", "Émetteur"].map((h) => (
-                <th
-                  key={h}
-                  className="px-3 py-2 text-left font-semibold uppercase tracking-wider text-zinc-500"
-                >
-                  {h}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {cookies.map((row, i) => (
-              <tr
-                key={i}
-                className="border-b border-white/5 last:border-0 odd:bg-white/[0.02]"
-              >
-                <td className="px-3 py-2.5 font-mono font-medium text-white">{row.name}</td>
-                <td className="px-3 py-2.5 text-zinc-400">{row.purpose}</td>
-                <td className="px-3 py-2.5 text-zinc-400">{row.duration}</td>
-                <td className="px-3 py-2.5 text-zinc-400">{row.provider}</td>
+      {/* Tableau des cookies — affiché uniquement si la catégorie en contient */}
+      {cookies.length > 0 ? (
+        <div className="overflow-x-auto rounded-xl border border-white/8">
+          <table className="w-full text-xs">
+            <thead>
+              <tr className="border-b border-white/8 bg-white/5">
+                {["Nom", "Finalité", "Durée", "Émetteur"].map((h) => (
+                  <th
+                    key={h}
+                    className="px-3 py-2 text-left font-semibold uppercase tracking-wider text-zinc-500"
+                  >
+                    {h}
+                  </th>
+                ))}
               </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+            </thead>
+            <tbody>
+              {cookies.map((row, i) => (
+                <tr
+                  key={i}
+                  className="border-b border-white/5 last:border-0 odd:bg-white/[0.02]"
+                >
+                  <td className="px-3 py-2.5 font-mono font-medium text-white">{row.name}</td>
+                  <td className="px-3 py-2.5 text-zinc-400">{row.purpose}</td>
+                  <td className="px-3 py-2.5 text-zinc-400">{row.duration}</td>
+                  <td className="px-3 py-2.5 text-zinc-400">{row.provider}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      ) : (
+        <p className="rounded-xl border border-white/8 bg-white/[0.02] px-4 py-3 text-xs italic text-zinc-500">
+          Aucun cookie n&apos;est actuellement déposé dans cette catégorie.
+        </p>
+      )}
     </div>
   );
 }

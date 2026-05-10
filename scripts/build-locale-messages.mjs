@@ -507,9 +507,9 @@ const shared = {
       "إرسال طلب الإطار",
     ],
     configError: [
-      "Configuration incomplète : ajoutez NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY dans votre fichier d'environnement.",
-      "Incomplete configuration: add NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY to your environment file.",
-      "إعداد ناقص: أضيفوا NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY في ملف البيئة.",
+      "Le formulaire est temporairement indisponible. Merci de réessayer plus tard.",
+      "The form is temporarily unavailable. Please try again later.",
+      "النموذج غير متاح مؤقتاً. يرجى المحاولة لاحقاً.",
     ],
     sendFailed: [
       "L'envoi a échoué. Vérifiez les champs ou réessayez plus tard.",

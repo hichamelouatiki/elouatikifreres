@@ -1,16 +1,14 @@
 /**
- * Middleware Next.js — Contrôle d'accès, en-têtes de sécurité, validation de locale.
+ * Copie de référence du middleware Next.js — NE PAS importer ce fichier.
  *
- * ╔══════════════════════════════════════════════════════════════════════╗
- * ║  ATTENTION : ce fichier est INACTIF en mode `output: "export"`.    ║
- * ║  Pour l'activer, retirer `output: "export"` de next.config.ts et   ║
- * ║  déployer sur un runtime Node.js (Vercel, VPS, Cloudflare Workers). ║
- * ╚══════════════════════════════════════════════════════════════════════╝
+ * Avec `output: "export"` dans next.config.ts, Next.js interdit la présence de
+ * `src/middleware.ts` (le middleware nécessite un runtime à chaque requête).
  *
- * Architecture en 3 couches (exécution dans l'ordre) :
- *  1. Validation de locale  — centralise l'équivalent de isValidLocale() + notFound()
- *  2. En-têtes de sécurité  — fallback du .htaccess, indépendant de l'hébergeur
- *  3. Garde-barrière admin  — à activer quand un espace connecté est ajouté
+ * Pour l’activer : retirer `output: "export"`, déployer sur Node/Vercel/Edge,
+ * puis renommer ou recopier ce fichier en `src/middleware.ts`.
+ *
+ * En hébergement statique (Apache, etc.), les en-têtes équivalents sont dans
+ * `public/.htaccess` ; la locale reste gérée par les routes `[locale]`.
  */
 
 import { NextResponse } from "next/server";
@@ -25,7 +23,7 @@ const DEFAULT_LOCALE = "fr";
 
 /**
  * Routes protégées par authentification.
- * À remplir quand un espace admin / dashboard est créé.
+ * À remplir quand un espace admin / dashboard est ajouté.
  * Exemple : ["/admin", "/dashboard"]
  */
 const PROTECTED_PREFIXES: string[] = [];
@@ -48,8 +46,9 @@ function buildSecurityHeaders(): Record<string, string> {
     "base-uri 'self'",
     "object-src 'none'",
     "frame-ancestors 'none'",
-    "form-action 'self' https://api.web3forms.com",
-    "connect-src 'self' https://api.web3forms.com https://challenges.cloudflare.com",
+    "form-action 'self'",
+    // Le client appelle uniquement le Worker Cloudflare proxy — jamais https://api.web3forms.com directement.
+    "connect-src 'self' https://contact-proxy.elouatiki.workers.dev https://challenges.cloudflare.com",
     "img-src 'self' data: blob:",
     "font-src 'self' data:",
     "frame-src https://challenges.cloudflare.com",
@@ -134,7 +133,13 @@ export function middleware(request: NextRequest): NextResponse {
         `/${DEFAULT_LOCALE}/login`,
         request.url,
       );
-      loginUrl.searchParams.set("callbackUrl", pathname);
+      // Sanitisation anti-open-redirect : n'autoriser que les chemins relatifs stricts.
+      // On refuse //host, les URLs absolues ou tout chemin encodé commençant par %2F%2F.
+      const safeCallback =
+        pathname.startsWith("/") && !pathname.startsWith("//")
+          ? pathname
+          : `/${DEFAULT_LOCALE}/`;
+      loginUrl.searchParams.set("callbackUrl", safeCallback);
       return NextResponse.redirect(loginUrl);
     }
   }

@@ -153,7 +153,7 @@
     "ariaMessage": "Message et enjeux du projet",
     "submitSending": "Envoi en cours…",
     "submitIdle": "Envoyer ma demande de cadrage",
-    "configError": "Configuration incomplète : ajoutez NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY dans votre fichier d'environnement.",
+    "configError": "Le formulaire est temporairement indisponible. Merci de réessayer plus tard.",
     "sendFailed": "L'envoi a échoué. Vérifiez les champs ou réessayez plus tard.",
     "networkError": "Connexion impossible. Réessayez dans quelques instants.",
     "errName": "Le nom complet est obligatoire.",
@@ -246,6 +246,28 @@
     "legal": "Mentions Légales",
     "privacy": "Politique de Confidentialité / RGPD",
     "cookies": "Gestion des Cookies"
+  },
+  "Blog": {
+    "metaTitle": "Blog et Actualités | El Ouatiki Frères",
+    "metaDescription": "Articles sur l'IA, le BIM, le bâtiment, l'innovation et la tech appliqués au terrain.",
+    "eyebrow": "Insights & veille",
+    "title": "Blog et Actualités",
+    "subtitle": "Analyses courtes, retours d'expérience et signaux faibles sur la convergence entre chantier et données.",
+    "readMore": "Lire la suite",
+    "backToBlog": "Retour au blog",
+    "readingTime": "{minutes} min de lecture",
+    "author": "Auteur",
+    "publishedOn": "Publié le",
+    "filterAll": "Tous",
+    "filterAria": "Filtrer les articles par catégorie",
+    "empty": "Aucun article pour cette catégorie pour le moment.",
+    "categories": {
+      "IA": "IA",
+      "BATIMENT": "Bâtiment",
+      "BIM": "BIM",
+      "INNOVATION": "Innovation",
+      "TECH": "Tech"
+    }
   },
   "Features": {
     "bim": {
