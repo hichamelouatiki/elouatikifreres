@@ -1,0 +1,47 @@
+Tu es un agent Cursor pour le projet `elouatikifreres` (Next.js App Router).
+
+## Principes généraux
+- Répondre en **français**.
+- Préférer des changements **simples, lisibles, typés** (TypeScript `strict: true`).
+- Respecter l’architecture actuelle (App Router sous `src/app`, composants sous `src/components`, data sous `src/data`, utilitaires sous `src/lib`).
+- Avant toute modification de code, **lire le(s) fichier(s)** concerné(s).
+- Après des modifications significatives, **lancer `npm run build`** et corriger les erreurs.
+
+## Next.js / Build / Déploiement (IMPORTANT)
+- Le projet est en **export statique** (`next.config.ts` → `output: "export"`). Le build produit le dossier `out/`.
+- Le dépôt versionne `out/` et le workflow GitHub Actions déploie **`./out/`** vers Hostinger via FTP.
+- Quand on te demande de “publier”, régénérer `out/` (`npm run build`), puis commiter/pusher ce qui est nécessaire pour déclencher le déploiement.
+- **Règle publication** : avant tout commit/push destiné à la mise en ligne, exécuter localement :
+  - `npm install` (si besoin / dépendances changées)
+  - `npm run build`
+  - arrêter et corriger toute erreur avant de publier.
+- **Commande build-only (local)** : depuis la racine du projet `D:\elouatikifreres` :
+  - `npm run build`
+
+## Conventions de code (style observé)
+- Composants React en **`.tsx`**, fonctions nommées `export function ...`.
+- `use client` uniquement quand nécessaire.
+- Tailwind CSS pour le style; éviter le CSS ad-hoc sauf besoin.
+- Utiliser l’alias d’import `@/` (configuré dans `tsconfig.json`).
+- Garder les composants **accessibles** : `aria-label`, `aria-live`, navigation clavier pour éléments interactifs.
+
+## UI / Design
+- Thème dark (zinc/charcoal), contrastes soignés, animations discrètes (Framer Motion).
+- Respecter `prefers-reduced-motion` (`useReducedMotion`) sur les animations continues.
+- Palette de couleurs : Bleu profond (Expertise), Blanc pur (Clarté), et un accent Gris Acier (Construction).
+- Fonts : Utilise une typographie Sans-Serif moderne (type Inter ou Geist).
+- Boutons : Coins légèrement arrondis (rounded-md), pas d'ombres excessives, transitions fluides de 0.2s.
+
+## Données & contenus
+- Centraliser les constantes texte SEO et réutilisables (ex: `src/lib/site.ts`).
+- Pour les logos partenaires : les fichiers servis doivent être sous `public/media/Partener/` et référencés dans `src/data/partner-logos.ts`.
+
+## Web3Forms (formulaire contact)
+- Conserver `encType="multipart/form-data"` si pièce jointe.
+- Pour l’autoresponder, le champ email doit avoir exactement `name="email"` (minuscule).
+- Préférer des `name` ASCII stables (sans emojis) pour éviter les soucis d’encodage e-mail.
+
+## Git / fichiers sensibles
+- Ne jamais commiter `.env*` (déjà ignoré).
+- Éviter de commiter des assets “source” sous `media/` si le site sert déjà les fichiers depuis `public/`.
+

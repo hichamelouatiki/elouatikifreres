@@ -7,9 +7,12 @@
  * Qualification progressive pour réduire la friction avant les coordonnées.
  *
  * Clé API : définir NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY dans `.env.local` (ne jamais committer la clé).
+ * Protection anti-spam : Cloudflare Turnstile (NEXT_PUBLIC_TURNSTILE_SITE_KEY) validé côté serveur
+ * par Web3Forms via le champ `cf-turnstile-response`. Sans token valide, Web3Forms refuse la soumission.
  * Autoresponder : activer dans le tableau de bord Web3Forms pour ce formulaire.
  */
 
+import { Turnstile } from "@marsidev/react-turnstile";
 import { AnimatePresence, motion } from "framer-motion";
 import {
   Building2,
@@ -30,6 +33,13 @@ import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useRef, useState } from "react";
 
 import { cn } from "@/lib/utils";
+import {
+  ALLOWED_ATTACHMENT_EXTENSIONS,
+  ALLOWED_ATTACHMENT_TYPES,
+  contactFormSchema,
+  MAX_ATTACHMENT_BYTES,
+  web3FormsResponseSchema,
+} from "@/lib/contact-schema";
 
 /**
  * Noms de champs Web3Forms : ASCII + underscores (récap admin / autoresponder).
@@ -47,38 +57,22 @@ const WF = {
   attachment: "Piece_jointe",
 } as const;
 
-const MAX_ATTACHMENT_BYTES = 15 * 1024 * 1024;
+/**
+ * Endpoint de soumission du formulaire.
+ * - Mode export statique (Hostinger) : pointe directement vers Web3Forms.
+ * - Mode serveur (Vercel/VPS) : pointer vers "/api/contact" pour cacher la clé.
+ *   → Définir NEXT_PUBLIC_CONTACT_ENDPOINT=/api/contact dans .env.local
+ *     et activer src/_server/contact-route.ts (voir instructions dans ce fichier).
+ */
+const CONTACT_ENDPOINT =
+  process.env.NEXT_PUBLIC_CONTACT_ENDPOINT ?? "https://api.web3forms.com/submit";
+
+/** Longueurs max pour les attributs HTML maxLength (UI uniquement). */
 const MAX_NAME_LENGTH = 120;
 const MAX_COMPANY_LENGTH = 160;
 const MAX_EMAIL_LENGTH = 254;
 const MAX_PHONE_LENGTH = 40;
 const MAX_MESSAGE_LENGTH = 2000;
-const ALLOWED_ATTACHMENT_EXTENSIONS = new Set([
-  "pdf",
-  "doc",
-  "docx",
-  "zip",
-  "rar",
-  "dwg",
-  "jpg",
-  "jpeg",
-  "png",
-]);
-const ALLOWED_ATTACHMENT_TYPES = new Set([
-  "",
-  "application/pdf",
-  "application/msword",
-  "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-  "application/zip",
-  "application/x-zip-compressed",
-  "application/vnd.rar",
-  "application/x-rar-compressed",
-  "image/jpeg",
-  "image/png",
-]);
-
-/** Regex email pragmatique (format courant professionnel). */
-const EMAIL_REGEX = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 
 const baseInput =
   "h-13 w-full rounded-2xl border px-4 text-base text-white placeholder:text-zinc-500 transition " +
@@ -134,14 +128,6 @@ const budgetOptions: BudgetOption[] = [
   { key: "bd5", value: "À définir" },
 ];
 
-function countDigits(value: string): number {
-  return value.replace(/\D/g, "").length;
-}
-
-function normalizeField(value: string, maxLength: number): string {
-  return value.replace(/[\u0000-\u001F\u007F]/g, " ").replace(/\s+/g, " ").trim().slice(0, maxLength);
-}
-
 function getFileExtension(fileName: string): string {
   return fileName.split(".").pop()?.toLowerCase() ?? "";
 }
@@ -172,6 +158,7 @@ export function ContactLeadForm() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [resultMessage, setResultMessage] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
 
   const totalSteps = 4;
@@ -235,56 +222,44 @@ export function ContactLeadForm() {
   }, [clearError]);
 
   const validateContactStep = useCallback((): boolean => {
+    const result = contactFormSchema.safeParse({
+      projectType,
+      budget,
+      name,
+      company,
+      email,
+      phone,
+      message,
+    });
+
+    if (result.success) {
+      if (attachment && !isAllowedAttachment(attachment)) {
+        setErrors({ attachment: t("errAttachment") });
+        return false;
+      }
+      setErrors({});
+      return true;
+    }
+
+    const flat = result.error.flatten().fieldErrors;
     const next: FieldErrors = {};
-
-    if (!projectType) {
-      next.project_type = t("errProjectType");
-    }
-    if (!budget) {
-      next.budget = t("errBudget");
-    }
-    const safeName = normalizeField(name, MAX_NAME_LENGTH);
-    const safeCompany = normalizeField(company, MAX_COMPANY_LENGTH);
-    const safeEmail = normalizeField(email, MAX_EMAIL_LENGTH).toLowerCase();
-    const safePhone = normalizeField(phone, MAX_PHONE_LENGTH);
-
-    if (!safeName) {
-      next.name = t("errName");
-    }
-    if (!safeCompany) {
-      next.company = t("errCompany");
-    }
-    if (!safeEmail) {
-      next.email = t("errEmailRequired");
-    } else if (!EMAIL_REGEX.test(safeEmail)) {
-      next.email = t("errEmailFormat");
-    }
-    if (!safePhone) {
-      next.phone = t("errPhoneRequired");
-    } else if (countDigits(safePhone) < 10) {
-      next.phone = t("errPhoneDigits");
+    for (const [rawKey, msgs] of Object.entries(flat)) {
+      const key = rawKey as FieldErrorKey;
+      const msgKey = msgs?.[0];
+      if (msgKey) next[key] = t(msgKey);
     }
     if (attachment && !isAllowedAttachment(attachment)) {
       next.attachment = t("errAttachment");
     }
-
     setErrors(next);
-    return Object.keys(next).length === 0;
-  }, [attachment, budget, company, email, name, phone, projectType, t]);
+    return false;
+  }, [attachment, budget, company, email, message, name, phone, projectType, t]);
 
   const canSubmit = useMemo(
     () =>
-      Boolean(
-        projectType &&
-          budget &&
-          normalizeField(name, MAX_NAME_LENGTH) &&
-          normalizeField(company, MAX_COMPANY_LENGTH) &&
-          EMAIL_REGEX.test(normalizeField(email, MAX_EMAIL_LENGTH).toLowerCase()) &&
-          normalizeField(phone, MAX_PHONE_LENGTH) &&
-          countDigits(normalizeField(phone, MAX_PHONE_LENGTH)) >= 10 &&
-          (!attachment || isAllowedAttachment(attachment)),
-      ),
-    [attachment, budget, company, email, name, phone, projectType],
+      contactFormSchema.safeParse({ projectType, budget, name, company, email, phone, message })
+        .success && (!attachment || isAllowedAttachment(attachment)),
+    [attachment, budget, company, email, message, name, phone, projectType],
   );
 
   function goNext() {
@@ -326,17 +301,25 @@ export function ContactLeadForm() {
     e.preventDefault();
     setResultMessage("");
 
-    if (!validateContactStep()) {
+    const parseResult = contactFormSchema.safeParse({
+      projectType,
+      budget,
+      name,
+      company,
+      email,
+      phone,
+      message,
+    });
+
+    if (!parseResult.success || (attachment && !isAllowedAttachment(attachment))) {
+      validateContactStep();
       return;
     }
 
     setIsSubmitting(true);
 
-    const safeName = normalizeField(name, MAX_NAME_LENGTH);
-    const safeCompany = normalizeField(company, MAX_COMPANY_LENGTH);
-    const safeEmail = normalizeField(email, MAX_EMAIL_LENGTH).toLowerCase();
-    const safePhone = normalizeField(phone, MAX_PHONE_LENGTH);
-    const safeMessage = normalizeField(message, MAX_MESSAGE_LENGTH);
+    const { name: safeName, company: safeCompany, email: safeEmail, phone: safePhone, message: safeMessage } =
+      parseResult.data;
 
     const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "";
     if (!accessKey) {
@@ -345,8 +328,15 @@ export function ContactLeadForm() {
       return;
     }
 
+    if (!turnstileToken) {
+      setResultMessage(t("captchaError"));
+      setIsSubmitting(false);
+      return;
+    }
+
     const formData = new FormData();
     formData.set("access_key", accessKey);
+    formData.set("cf-turnstile-response", turnstileToken);
     formData.set("subject", t("subject"));
     formData.set("from_name", t("fromName"));
     formData.set("replyto", safeEmail);
@@ -364,12 +354,14 @@ export function ContactLeadForm() {
     }
 
     try {
-      const res = await fetch("https://api.web3forms.com/submit", {
+      const res = await fetch(CONTACT_ENDPOINT, {
         method: "POST",
         body: formData,
       });
 
-      const data = (await res.json()) as { success?: boolean; message?: string };
+      const rawJson: unknown = await res.json();
+      const parsed = web3FormsResponseSchema.safeParse(rawJson);
+      const data = parsed.success ? parsed.data : { success: false as const };
 
       if (res.ok && data.success) {
         setIsSuccess(true);
@@ -383,6 +375,7 @@ export function ContactLeadForm() {
         setAttachment(null);
         setStep(0);
         setErrors({});
+        setTurnstileToken(null);
         if (fileInputRef.current) {
           fileInputRef.current.value = "";
         }
@@ -822,6 +815,18 @@ export function ContactLeadForm() {
             </motion.div>
           ) : null}
         </AnimatePresence>
+
+        {step === 3 && process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY ? (
+          <div className="mt-6">
+            <Turnstile
+              siteKey={process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY}
+              onSuccess={(token) => setTurnstileToken(token)}
+              onExpire={() => setTurnstileToken(null)}
+              onError={() => setTurnstileToken(null)}
+              options={{ theme: "dark", size: "normal" }}
+            />
+          </div>
+        ) : null}
 
         <div className="mt-8 flex flex-col-reverse gap-3 border-t border-white/10 pt-5 sm:flex-row sm:items-center sm:justify-between">
           <button

@@ -24,15 +24,30 @@ npm run lint
 npm run build
 ```
 
-## Variables d’environnement (Web3Forms)
+## Variables d'environnement
 
-Le formulaire peut être connecté à Web3Forms via une clé publique.
+Le formulaire de contact utilise Web3Forms (envoi) protégé par Cloudflare Turnstile (anti-spam).
 
 Crée un fichier `.env.local` (non commité) :
 
 ```env
+# Clé Web3Forms — récupérer sur web3forms.com
 NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=ta_cle_web3forms
+
+# Site Key Turnstile — récupérer sur dash.cloudflare.com → Turnstile → Add site
+# Type de widget : Managed. Cette clé est publique (pas de risque à l'exposer).
+NEXT_PUBLIC_TURNSTILE_SITE_KEY=ta_site_key_turnstile
 ```
+
+### Secrets GitHub Actions (Settings → Secrets → Actions)
+
+| Nom du secret | Valeur |
+|---|---|
+| `WEB3FORMS_ACCESS_KEY` | Clé Web3Forms |
+| `TURNSTILE_SITE_KEY` | Site Key Cloudflare Turnstile |
+| `FTP_SERVER` | Hôte FTP Hostinger |
+| `FTP_USERNAME` | Identifiant FTP |
+| `FTP_PASSWORD` | Mot de passe FTP |
 
 Puis relance :
 
@@ -52,11 +67,11 @@ npx serve out -l 3001
 
 Ouvre `http://localhost:3001`.
 
-> Note : `npm run start` ne s’applique pas ici (export statique).
+> Note : `npm run start` ne s'applique pas ici (export statique).
 
 ## Déployer sur Hostinger
 
-### 1) Générer l’export
+### 1) Générer l'export
 
 ```bash
 npm install
