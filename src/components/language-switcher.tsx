@@ -2,6 +2,7 @@
 
 import { useLocale, useTranslations } from "next-intl";
 
+import { blogPathForLocaleSwitcher } from "@/i18n/blog-routes";
 import { Link, usePathname } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 import { routing } from "@/i18n/routing";
@@ -31,7 +32,7 @@ export function LanguageSwitcher({ orientation = "horizontal" }: LanguageSwitche
       {routing.locales.map((loc) => (
         <Link
           key={loc}
-          href={pathname}
+          href={blogPathForLocaleSwitcher(pathname, loc)}
           locale={loc}
           className={cn(
             "rounded-md text-center transition-colors",

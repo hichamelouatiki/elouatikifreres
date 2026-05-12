@@ -6,6 +6,7 @@ import { notFound } from "next/navigation";
 import { DamInspectionArticle } from "@/components/dam-inspection-article";
 import { SiteFooter } from "@/components/site-footer";
 import { getArticleBySlug } from "@/data/blog-articles";
+import { blogListingPath } from "@/i18n/blog-routes";
 import { Link } from "@/i18n/navigation";
 import { isValidLocale, type AppLocale } from "@/i18n/routing";
 
@@ -60,13 +61,18 @@ export default async function IaInspectionBarragesPage({ params }: Props) {
     notFound();
   }
 
-  const t = await getTranslations({ locale, namespace: "Blog" });
+  const uiLocale: AppLocale =
+    locale === "ar" ? "en" : (locale as AppLocale);
+  const t = await getTranslations({ locale: uiLocale, namespace: "Blog" });
 
   return (
     <main className="min-h-screen bg-zinc-950 text-zinc-100">
-      <div className="mx-auto max-w-4xl px-5 pt-10 sm:px-8 sm:pt-14 lg:px-12">
+      <div
+        className="mx-auto max-w-4xl px-5 pt-10 sm:px-8 sm:pt-14 lg:px-12"
+        dir={locale === "ar" ? "ltr" : undefined}
+      >
         <Link
-          href="/blog-et-actualites"
+          href={blogListingPath(locale as AppLocale)}
           className="inline-flex items-center gap-2 text-sm font-medium text-cyan-300 transition hover:text-cyan-200"
         >
           <ArrowLeft className="size-4" aria-hidden />

@@ -2,6 +2,7 @@
  * Fat footer : marque, solutions, entreprise, contact + fine print.
  */
 
+import { FooterBlogLink } from "@/components/footer-blog-link";
 import { SiteLogo, SITE_LOGO_FOOTER_DISPLAY } from "@/components/site-logo";
 import {
   Camera,
@@ -111,9 +112,7 @@ export function SiteFooter() {
                 </Link>
               </li>
               <li>
-                <Link className="transition hover:text-white" href="/blog-et-actualites">
-                  Blog / Actualités
-                </Link>
+                <FooterBlogLink className="transition hover:text-white" />
               </li>
             </ul>
           </nav>
@@ -163,12 +162,12 @@ export function SiteFooter() {
             <a className="transition hover:text-white" href="#">
               Mentions Légales
             </a>
-            <a className="transition hover:text-white" href="/fr/politique-de-confidentialite/">
+            <Link className="transition hover:text-white" href="/politique-de-confidentialite">
               Politique de Confidentialité / RGPD / Loi 09-08 (Maroc)
-            </a>
-            <a className="transition hover:text-white" href="/fr/gestion-des-cookies/">
+            </Link>
+            <Link className="transition hover:text-white" href="/gestion-des-cookies">
               Gestion des Cookies
-            </a>
+            </Link>
           </div>
         </div>
       </div>

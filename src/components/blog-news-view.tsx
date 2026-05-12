@@ -3,14 +3,17 @@
 import { Clock } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
+import { displayTextWithGroteskSafeAmpersand } from "@/components/display-text-with-safe-ampersand";
 import {
   BLOG_CATEGORY_IDS,
   type BlogArticleCard,
   type BlogCategoryId,
 } from "@/data/blog-articles";
+import { blogArticlePath } from "@/i18n/blog-routes";
 import { Link } from "@/i18n/navigation";
+import type { AppLocale } from "@/i18n/routing";
 
 type FilterValue = "ALL" | BlogCategoryId;
 
@@ -42,6 +45,7 @@ type Props = {
 
 export function BlogNewsView({ articles }: Props) {
   const t = useTranslations("Blog");
+  const locale = useLocale() as AppLocale;
   const [filter, setFilter] = useState<FilterValue>("ALL");
 
   const filtered = useMemo(() => {
@@ -61,10 +65,10 @@ export function BlogNewsView({ articles }: Props) {
     <div className="mx-auto max-w-7xl px-5 pb-20 pt-10 sm:px-8 sm:pb-24 sm:pt-14 lg:px-12">
       <header className="mb-10 max-w-3xl space-y-4 sm:mb-14">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-400">
-          {t("eyebrow")}
+          {displayTextWithGroteskSafeAmpersand(t("eyebrow"), "font-semibold")}
         </p>
         <h1 className="font-[family-name:var(--font-space-grotesk)] text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl">
-          {t("title")}
+          {displayTextWithGroteskSafeAmpersand(t("title"), "font-bold")}
         </h1>
         <p className="text-base leading-relaxed text-zinc-400 sm:text-lg">{t("subtitle")}</p>
       </header>
@@ -141,7 +145,7 @@ export function BlogNewsView({ articles }: Props) {
                 <Link
                   href={
                     article.slug
-                      ? `/blog-et-actualites/${article.slug}`
+                      ? blogArticlePath(locale, article.slug)
                       : "/#contact"
                   }
                   className="inline-flex w-fit items-center gap-2 rounded-xl border border-cyan-500/40 bg-cyan-500/10 px-4 py-2.5 text-sm font-semibold text-cyan-200 transition hover:border-cyan-400/60 hover:bg-cyan-500/20 hover:text-white"

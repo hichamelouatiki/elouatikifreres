@@ -650,9 +650,9 @@ const EN_CONTENT: ArticleContent = {
 };
 
 function getContent(locale: AppLocale): ArticleContent {
-  if (locale === "en") return EN_CONTENT;
-  // AR : pas encore traduit, on retombe sur le FR pour ne pas casser l'UX.
-  return FR_CONTENT;
+  // Locale AR : corps en anglais, comme les autres articles du blog.
+  if (locale === "fr") return FR_CONTENT;
+  return EN_CONTENT;
 }
 
 const SEVERITY_TONE_CLASS: Record<SeverityTone, { card: string; badge: string }> = {
@@ -672,11 +672,13 @@ const SEVERITY_TONE_CLASS: Record<SeverityTone, { card: string; badge: string }>
 
 export async function DamInspectionArticle() {
   const locale = (await getLocale()) as AppLocale;
-  const t = await getTranslations("Blog");
+  const blogUiLocale = locale === "ar" ? "en" : locale;
+  const t = await getTranslations({ locale: blogUiLocale, namespace: "Blog" });
   const c = getContent(locale);
 
   const publishedDate = new Date(ARTICLE_PUBLISHED_AT);
-  const formattedDate = new Intl.DateTimeFormat(locale, {
+  const formattingLocale = locale === "fr" ? "fr-FR" : "en-US";
+  const formattedDate = new Intl.DateTimeFormat(formattingLocale, {
     dateStyle: "long",
   }).format(publishedDate);
   const readingTimeLabel = t("readingTime", {
@@ -684,7 +686,10 @@ export async function DamInspectionArticle() {
   });
 
   return (
-    <article className="article-container mx-auto max-w-4xl px-5 py-16 text-zinc-200 sm:px-8 sm:py-20 lg:px-12">
+    <article
+      dir={locale === "ar" ? "ltr" : undefined}
+      className="article-container mx-auto max-w-4xl px-5 py-16 text-zinc-200 sm:px-8 sm:py-20 lg:px-12"
+    >
       <header className="article-header space-y-6">
         <p className="text-sm font-semibold uppercase tracking-[0.22em] text-cyan-400">
           {c.eyebrow}

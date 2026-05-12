@@ -9,6 +9,7 @@
 import { useEffect, useState } from "react";
 import { CheckCircle2, Cookie, Info, RefreshCw, ShieldCheck, XCircle } from "lucide-react";
 
+import { Link } from "@/i18n/navigation";
 import { SiteFooter } from "@/components/site-footer";
 
 type ConsentState = {
@@ -44,9 +45,11 @@ export default function GestionDesCookiesPage() {
   const [loaded, setLoaded] = useState(false);
 
   useEffect(() => {
-    const stored = loadConsent();
-    if (stored) setConsent(stored);
-    setLoaded(true);
+    queueMicrotask(() => {
+      const stored = loadConsent();
+      if (stored) setConsent(stored);
+      setLoaded(true);
+    });
   }, []);
 
   function handleSave() {
@@ -181,12 +184,12 @@ export default function GestionDesCookiesPage() {
             <p>
               Pour plus d&apos;informations sur l&apos;utilisation de vos données, consultez
               notre{" "}
-              <a
-                href="/fr/politique-de-confidentialite/"
+              <Link
+                href="/politique-de-confidentialite"
                 className="text-cyan-400 underline underline-offset-2 hover:text-cyan-300"
               >
                 Politique de Confidentialité
-              </a>
+              </Link>
               . Vous pouvez également paramétrer votre navigateur pour bloquer
               tous les cookies — certaines fonctionnalités du site pourraient
               alors être affectées.

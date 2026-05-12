@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 
 import { LanguageSwitcher } from "@/components/language-switcher";
 import { SiteLogo, SITE_LOGO_HEADER_DISPLAY } from "@/components/site-logo";
+import { blogListingPath } from "@/i18n/blog-routes";
 import { Link } from "@/i18n/navigation";
+import type { AppLocale } from "@/i18n/routing";
 
 /** Largeur mini pour considérer l’affichage « bureau » (ex. fenêtre 1024×720). */
 const DESKTOP_MIN_WIDTH_PX = 1024;
@@ -49,6 +51,8 @@ function HamburgerIcon({ open }: { open: boolean }) {
 export function SiteHeader() {
   const [mobileOpen, setMobileOpen] = useState(false);
   const t = useTranslations("Header");
+  const locale = useLocale() as AppLocale;
+  const blogHref = blogListingPath(locale);
 
   useEffect(() => {
     const mq = window.matchMedia(`(min-width: ${DESKTOP_MIN_WIDTH_PX}px)`);
@@ -82,21 +86,30 @@ export function SiteHeader() {
 
         {/* Bureau : largeur ≥ 1024px — menu horizontal complet */}
         <nav
-          className="hidden min-[1024px]:flex items-center gap-8 text-sm font-medium text-zinc-300"
+          className="hidden min-[1024px]:flex min-[1024px]:flex-wrap min-[1024px]:justify-end min-[1024px]:gap-x-5 min-[1024px]:gap-y-2 xl:gap-x-7 min-[1280px]:gap-x-8 items-center text-sm font-medium text-zinc-300"
           aria-label={t("mainNav")}
         >
           {NAV_LINKS.map((item) => (
             <Link
               key={item.href}
               href={item.href}
-              className="transition-colors hover:text-white"
+              className="shrink-0 transition-colors hover:text-white"
             >
               {t(item.labelKey)}
             </Link>
           ))}
           <Link
+            href="/carrieres"
+            className="shrink-0 transition-colors hover:text-white"
+          >
+            {t("recrutement")}
+          </Link>
+          <Link href={blogHref} className="shrink-0 transition-colors hover:text-white">
+            {t("blog")}
+          </Link>
+          <Link
             href="/#contact"
-            className="rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-zinc-950 shadow-md shadow-cyan-500/20 transition hover:bg-cyan-400"
+            className="shrink-0 rounded-xl bg-cyan-500 px-4 py-2 text-sm font-semibold text-zinc-950 shadow-md shadow-cyan-500/20 transition hover:bg-cyan-400"
           >
             {t("contact")}
           </Link>
@@ -133,6 +146,20 @@ export function SiteHeader() {
                 {t(item.labelKey)}
               </Link>
             ))}
+            <Link
+              href="/carrieres"
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-200 transition hover:bg-white/5 hover:text-white"
+              onClick={() => setMobileOpen(false)}
+            >
+              {t("recrutement")}
+            </Link>
+            <Link
+              href={blogHref}
+              className="rounded-lg px-3 py-2.5 text-sm font-medium text-zinc-200 transition hover:bg-white/5 hover:text-white"
+              onClick={() => setMobileOpen(false)}
+            >
+              {t("blog")}
+            </Link>
             <Link
               href="/#contact"
               className="mt-2 inline-flex items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-zinc-950 shadow-sm shadow-cyan-500/20 transition hover:bg-cyan-400"

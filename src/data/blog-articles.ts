@@ -18,7 +18,8 @@ export type BlogArticle = {
   excerpts: Record<AppLocale, string>;
   /**
    * Slug optionnel : si défini, la carte « Lire la suite » pointe vers la page
-   * dédiée `/blog-et-actualites/<slug>/`. Sinon, fallback vers le contact.
+   * Slug optionnel : si défini, la carte « Lire la suite » pointe vers la page
+   * dédiée `blog-et-actualites/<slug>/` ou `blog-and-news/<slug>/` (en anglais).
    */
   slug?: string;
   /** Date de publication ISO (YYYY-MM-DD) — formatée selon la locale à l'affichage. */
@@ -50,18 +51,22 @@ const ARTICLES: BlogArticle[] = [
     },
   },
   {
-    id: "vision-ia-chantier",
+    id: "ia-chantier-vision-ordinateur",
+    slug: "ia-chantier-vision-ordinateur",
     category: "IA",
-    imageSrc: "/images/Villa_BIM.png",
+    imageSrc: "/media/blog/IA_chantier/cover-IA-building%20site.png",
+    publishedAt: "2023-03-18",
+    readingMinutes: 8,
+    author: "EL OUATIKI Hicham",
     titles: {
       fr: "Quand l'IA lit le chantier : de la vision par ordinateur aux arbitrages terrain",
       en: "When AI reads the site: from computer vision to field decisions",
-      ar: "عندما تقرأ الذكاء الاصطناعي الموقع: من الرؤية الحاسوبية إلى قرارات التنفيذ",
+      ar: "When AI reads the site: from computer vision to field decisions",
     },
     excerpts: {
-      fr: "Détection d'écarts BIM / réel, scoring des risques et priorisation des interventions sans noyer les équipes sous des tableaux.",
-      en: "BIM vs as-built gap detection, risk scoring, and intervention priorities without burying teams in spreadsheets.",
-      ar: "كشف الفجوات بين نموذج BIM والواقع، وتقدير المخاطر وأولويات التدخل دون إغراق الفرق في جداول بيانات.",
+      fr: "Computer Vision, Scan-to-BIM, suivi d'avancement automatisé et copilote cognitif : comment l'IA augmente le chef de chantier sans le remplacer.",
+      en: "Computer Vision, Scan-to-BIM, automated progress tracking and a cognitive copilot: how AI augments the site manager without replacing them.",
+      ar: "Computer Vision, Scan-to-BIM, automated progress tracking and a cognitive copilot: how AI augments the site manager without replacing them.",
     },
   },
   {
@@ -126,17 +131,22 @@ const ARTICLES: BlogArticle[] = [
   },
   {
     id: "ml-planning",
+    slug: "ia-planning-monte-carlo",
     category: "IA",
-    imageSrc: "/images/Villa_beton.png",
+    imageSrc:
+      "/media/blog/IA_planning/Cover%20Image%20Concept%20Chaos%20vs%20Data.png",
+    publishedAt: "2024-12-16",
+    readingMinutes: 14,
+    author: "EL OUATIKI Hicham",
     titles: {
-      fr: "Machine learning et planning : scénarios Monte Carlo appliqués au BTP",
-      en: "Machine learning and planning: Monte Carlo scenarios for construction",
-      ar: "التعلم الآلي والتخطيط: سيناريوهات مونت كارلو في البناء",
+      fr: "Machine Learning et plannings : Monte Carlo, BIM 4D et gestion prédictive des risques",
+      en: "Machine learning and schedules: Monte Carlo, 4D BIM, and predictive risk management",
+      ar: "التعلم الآلي والجداول الزمنية: مونت كارلو وBIM أبعادًا زمنية وإدارة مخاطر تنبؤية",
     },
     excerpts: {
-      fr: "Simuler des milliers de calendriers possibles pour anticiper les goulots et arbitrer les réserves.",
-      en: "Simulate thousands of schedules to spot bottlenecks and manage float.",
-      ar: "محاكاة آلاف الجداول الزمنية لرصد الاختناقات وإدارة الهوامش الزمنية.",
+      fr: "De la tyrannie du Gantt déterministe aux simulations probabilistes : comment la ConTech et l'IA transforment le planning de chantier.",
+      en: "From deterministic Gantt tyranny to probabilistic simulations: how ConTech and AI reshape construction schedules.",
+      ar: "من هيمنة الغانت الحتمية إلى المحاكاة الاحتمالية: كيف تعيد كونتك والذكاء الاصطناعي تشكيل جدولة المواقع.",
     },
   },
   {
@@ -171,14 +181,20 @@ const ARTICLES: BlogArticle[] = [
   },
 ];
 
+/** Locale AR : titres et extraits des cartes blog en anglais (spec produit). */
+export function blogArticleCopyLocale(locale: AppLocale): AppLocale {
+  return locale === "ar" ? "en" : locale;
+}
+
 export function getBlogArticles(locale: AppLocale) {
+  const copyLocale = blogArticleCopyLocale(locale);
   return ARTICLES.map((a) => ({
     id: a.id,
     slug: a.slug,
     category: a.category,
     imageSrc: a.imageSrc,
-    title: a.titles[locale],
-    excerpt: a.excerpts[locale],
+    title: a.titles[copyLocale],
+    excerpt: a.excerpts[copyLocale],
     publishedAt: a.publishedAt,
     readingMinutes: a.readingMinutes,
     author: a.author,
@@ -198,13 +214,14 @@ export const BLOG_ARTICLE_SLUGS = ARTICLES.flatMap((a) =>
 export function getArticleBySlug(slug: string, locale: AppLocale) {
   const article = ARTICLES.find((a) => a.slug === slug);
   if (!article) return null;
+  const copyLocale = blogArticleCopyLocale(locale);
   return {
     id: article.id,
     slug: article.slug,
     category: article.category,
     imageSrc: article.imageSrc,
-    title: article.titles[locale],
-    excerpt: article.excerpts[locale],
+    title: article.titles[copyLocale],
+    excerpt: article.excerpts[copyLocale],
     publishedAt: article.publishedAt,
     readingMinutes: article.readingMinutes,
     author: article.author,

@@ -38,6 +38,15 @@ html[lang="ar"] body {
   font-family: var(--font-noto-arabic), var(--font-inter), Arial, Helvetica, sans-serif;
 }
 
+/*
+ * Titres en Space Grotesk : l’esperluette peut être rendue par une police de repli (effet « Times »).
+ * Forcer Inter sur le seul caractère corrige le défaut (les utilitaires Tailwind arbitraires ne suffisent pas toujours).
+ */
+.space-grotesk-safe-amp {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif !important;
+  font-style: normal !important;
+}
+
 ::selection {
   background: rgba(34, 211, 238, 0.25);
   color: #ffffff;
