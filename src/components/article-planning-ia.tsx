@@ -8,6 +8,7 @@ import Image from "next/image";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { PlanningProbabilisteNote } from "@/components/planning-probabiliste-note";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -194,12 +195,14 @@ const FR_CONTENT: ArticleContent = {
   ),
   s2SubDistrib: "Remplacer les certitudes par des distributions",
   s2DistribIntro: (
-    <p className="leading-relaxed text-zinc-300">
+    <div className="leading-relaxed text-zinc-300">
       Le changement de paradigme commence à la racine. Pour chaque tâche du
       planning, on ne saisit plus une durée stricte, mais on modélise
       l&apos;incertitude via une distribution statistique (souvent triangulaire
-      ou PERT). Le planificateur, ou le système, définit trois variables :
-    </p>
+      ou PERT)
+      <PlanningProbabilisteNote locale="fr" />
+      {". Le planificateur, ou le système, définit trois variables :"}
+    </div>
   ),
   s2DistribBullets: [
     <>
@@ -557,11 +560,12 @@ const EN_CONTENT: ArticleContent = {
   ),
   s2SubDistrib: "Swap certainties for distributions",
   s2DistribIntro: (
-    <p className="leading-relaxed text-zinc-300">
+    <div className="leading-relaxed text-zinc-300">
       The paradigm shift starts at input level. Each activity receives not one
-      duration but a statistical distribution—often triangular or PERT—with
-      three anchors:
-    </p>
+      duration but a statistical distribution—often triangular or PERT
+      <PlanningProbabilisteNote locale="en" />
+      —with three anchors:
+    </div>
   ),
   s2DistribBullets: [
     <>
