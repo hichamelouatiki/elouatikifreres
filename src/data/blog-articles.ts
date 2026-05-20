@@ -71,17 +71,21 @@ const ARTICLES: BlogArticle[] = [
   },
   {
     id: "enveloppe-beton-bois",
+    slug: "enveloppes-haute-performance",
     category: "BATIMENT",
-    imageSrc: "/images/Villa_beton.png",
+    imageSrc: "/media/blog/enveloppes-haute-performance/cover.png",
+    publishedAt: "2022-06-14",
+    readingMinutes: 11,
+    author: "EL OUATIKI Yasser",
     titles: {
       fr: "Enveloppes haute performance : béton, bois et mise en œuvre sans surprise",
       en: "High-performance envelopes: concrete, wood, and predictable execution",
-      ar: "أغلفة عالية الأداء: خشب وخرسانة وتنفيذ يمكن التنبؤ به",
+      ar: "High-performance envelopes: concrete, wood, and predictable execution",
     },
     excerpts: {
       fr: "Coordination corps d'état, jalons météo et contrôle qualité pour sécuriser l'étanchéité et les finitions.",
       en: "Trade coordination, weather milestones, and QA to lock in waterproofing and finishes.",
-      ar: "تنسيق الأشغال ومراحل الطقس ومراقبة الجودة لتأمين العزل والتشطيبات.",
+      ar: "Trade coordination, weather milestones, and QA to lock in waterproofing and finishes.",
     },
   },
   {
