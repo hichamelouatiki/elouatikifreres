@@ -1,6 +1,6 @@
 "use client";
 
-import { Clock } from "lucide-react";
+import { CalendarDays, Clock, User } from "lucide-react";
 import Image from "next/image";
 import { useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
@@ -30,6 +30,13 @@ function categoryBadgeClass(category: BlogCategoryId): string {
     case "TECH":
       return "border-sky-400/35 bg-sky-500/15 text-sky-200";
   }
+}
+
+function formatPublishedDate(isoDate: string, locale: AppLocale): string {
+  const formattingLocale = locale === "fr" ? "fr" : "en";
+  return new Intl.DateTimeFormat(formattingLocale, {
+    dateStyle: "medium",
+  }).format(new Date(isoDate));
 }
 
 function filterButtonClass(active: boolean): string {
@@ -135,11 +142,31 @@ export function BlogNewsView({ articles }: Props) {
                   {article.excerpt}
                 </p>
 
-                {article.readingMinutes ? (
-                  <p className="inline-flex items-center gap-1.5 text-xs font-medium text-zinc-500">
-                    <Clock className="size-3.5" aria-hidden />
-                    {t("readingTime", { minutes: article.readingMinutes })}
-                  </p>
+                {article.publishedAt ||
+                article.readingMinutes ||
+                article.author ? (
+                  <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5 text-xs font-medium text-zinc-500">
+                    {article.publishedAt ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <CalendarDays className="size-3.5 shrink-0" aria-hidden />
+                        <time dateTime={article.publishedAt}>
+                          {formatPublishedDate(article.publishedAt, locale)}
+                        </time>
+                      </span>
+                    ) : null}
+                    {article.readingMinutes ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <Clock className="size-3.5 shrink-0" aria-hidden />
+                        {t("readingTime", { minutes: article.readingMinutes })}
+                      </span>
+                    ) : null}
+                    {article.author ? (
+                      <span className="inline-flex items-center gap-1.5">
+                        <User className="size-3.5 shrink-0" aria-hidden />
+                        {article.author}
+                      </span>
+                    ) : null}
+                  </div>
                 ) : null}
 
                 <Link
