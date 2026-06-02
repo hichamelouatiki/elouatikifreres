@@ -1,3 +1,4 @@
+
 import type { AppLocale } from "@/i18n/routing";
 
 export const BLOG_CATEGORY_IDS = [
@@ -129,17 +130,21 @@ const ARTICLES: BlogArticle[] = [
   },
   {
     id: "edge-iot-securite",
+    slug: "edge-computing-iot",
     category: "TECH",
-    imageSrc: "/images/Villa_BIM.png",
+    imageSrc: "/media/blog/Edge%20Computing/Cover.png",
+    publishedAt: "2024-10-01",
+    readingMinutes: 11,
+    author: "EL OUATIKI Hicham",
     titles: {
-      fr: "Edge computing et IoT chantier : latence faible, souveraineté des données",
-      en: "Edge and site IoT: low latency and data sovereignty",
-      ar: "الحوسبة الطرفية وإنترنت الأشياء في الموقع: زمن انتقال منخفض وسيادة البيانات",
+      fr: "L'Éveil des Chantiers : Pourquoi l'Edge Computing est l'Architecture Cruciale pour l'IoT de la Construction",
+      en: "The Awakening of Construction Sites: Why Edge Computing Is the Crucial Architecture for Construction IoT",
+      ar: "The Awakening of Construction Sites: Why Edge Computing Is the Crucial Architecture for Construction IoT",
     },
     excerpts: {
-      fr: "Architectures hybrides, filets offline-first et supervision centralisée pour les sites sensibles.",
-      en: "Hybrid stacks, offline-first meshes, and centralized oversight for sensitive projects.",
-      ar: "بنى هجينة وتشغيل دون اتصال دائم وإشراف مركزي للمشاريع الحساسة.",
+      fr: "Latence ultra-faible, architectures offline-first et souveraineté des données : pourquoi l'Edge est indispensable à l'IoT du BTP.",
+      en: "Ultra-low latency, offline-first architectures, and data sovereignty: why edge is essential for construction IoT.",
+      ar: "Ultra-low latency, offline-first architectures, and data sovereignty: why edge is essential for construction IoT.",
     },
   },
   {
