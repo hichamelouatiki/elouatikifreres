@@ -13,6 +13,7 @@ import { CalendarDays, Clock } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { ArticleFigure } from "@/components/article-figure";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -715,17 +716,12 @@ export async function DamInspectionArticle() {
         {c.intro}
       </header>
 
-      <figure className="image-figure my-10 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40 shadow-xl shadow-black/30 sm:my-14">
-        <img
-          src={COVER_IMAGE_SRC}
-          alt={c.coverAlt}
-          className="aspect-[16/9] w-full object-cover"
-          loading="eager"
-        />
-        <figcaption className="px-5 py-3 text-center text-sm italic text-zinc-400">
-          {c.coverCaption}
-        </figcaption>
-      </figure>
+      <ArticleFigure
+        src={COVER_IMAGE_SRC}
+        alt={c.coverAlt}
+        caption={c.coverCaption}
+        priority
+      />
 
       <section className="content-block mt-12 space-y-5">
         <h2 className="section-title font-[family-name:var(--font-space-grotesk)] text-2xl font-bold text-white sm:text-3xl">
@@ -767,17 +763,12 @@ export async function DamInspectionArticle() {
             {c.s3b.title}
           </h3>
 
-          <figure className="image-figure my-6 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40 shadow-lg shadow-black/30">
-            <img
-              src={TWIN_IMAGE_SRC}
-              alt={c.s3b.alt}
-              className="aspect-[16/9] w-full object-cover"
-              loading="lazy"
-            />
-            <figcaption className="px-5 py-3 text-center text-sm italic text-zinc-400">
-              {c.s3b.caption}
-            </figcaption>
-          </figure>
+          <ArticleFigure
+            src={TWIN_IMAGE_SRC}
+            alt={c.s3b.alt}
+            caption={c.s3b.caption}
+            compact
+          />
 
           <p className="leading-relaxed text-zinc-300">{c.s3b.body}</p>
         </div>
@@ -787,17 +778,12 @@ export async function DamInspectionArticle() {
             {c.s3c.title}
           </h3>
 
-          <figure className="image-figure my-6 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40 shadow-lg shadow-black/30">
-            <img
-              src={AI_IMAGE_SRC}
-              alt={c.s3c.alt}
-              className="aspect-[16/9] w-full object-cover"
-              loading="lazy"
-            />
-            <figcaption className="px-5 py-3 text-center text-sm italic text-zinc-400">
-              {c.s3c.caption}
-            </figcaption>
-          </figure>
+          <ArticleFigure
+            src={AI_IMAGE_SRC}
+            alt={c.s3c.alt}
+            caption={c.s3c.caption}
+            compact
+          />
 
           <p className="leading-relaxed text-zinc-300">{c.s3c.body}</p>
           <ul className="list-disc space-y-3 pl-6 text-zinc-300 marker:text-cyan-400">

@@ -133,8 +133,8 @@ export function SiteFooter() {
                 <span className="mt-0.5 inline-flex size-9 shrink-0 items-center justify-center rounded-xl border border-white/10 bg-white/5 text-orange-200/90">
                   <Phone className="size-4" aria-hidden />
                 </span>
-                <a className="transition hover:text-white" href="tel:+212766738969">
-                  +212766738969
+                <a className="transition hover:text-white" href="tel:+212535402637">
+                  +212 5 35 40 26 37
                 </a>
               </li>
               <li className="flex gap-3">

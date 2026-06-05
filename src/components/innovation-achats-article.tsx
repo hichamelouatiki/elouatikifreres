@@ -9,6 +9,7 @@ import { CalendarDays, Clock } from "lucide-react";
 import { getLocale, getTranslations } from "next-intl/server";
 import type { ReactNode } from "react";
 
+import { ArticleFigure } from "@/components/article-figure";
 import { Link } from "@/i18n/navigation";
 import type { AppLocale } from "@/i18n/routing";
 
@@ -747,32 +748,6 @@ function getContent(locale: AppLocale): ArticleContent {
   return EN_CONTENT;
 }
 
-function ArticleFigure({
-  src,
-  alt,
-  caption,
-  eager = false,
-}: {
-  src: string;
-  alt: string;
-  caption: ReactNode;
-  eager?: boolean;
-}) {
-  return (
-    <figure className="image-figure my-8 overflow-hidden rounded-2xl border border-white/10 bg-zinc-900/40 shadow-lg shadow-black/30 sm:my-10">
-      <img
-        src={src}
-        alt={alt}
-        className="aspect-[16/9] w-full object-cover"
-        loading={eager ? "eager" : "lazy"}
-      />
-      <figcaption className="px-5 py-3 text-center text-sm italic text-zinc-400">
-        {caption}
-      </figcaption>
-    </figure>
-  );
-}
-
 export async function InnovationAchatsArticle() {
   const locale = (await getLocale()) as AppLocale;
   const blogUiLocale = locale === "ar" ? "en" : locale;
@@ -822,7 +797,7 @@ export async function InnovationAchatsArticle() {
         src={COVER_IMAGE_SRC}
         alt={c.coverAlt}
         caption={c.coverCaption}
-        eager
+        priority
       />
 
       <section className="content-block mt-12 space-y-5">
@@ -849,6 +824,7 @@ export async function InnovationAchatsArticle() {
           src={IMAGE1_SRC}
           alt={c.image1Alt}
           caption={c.image1Caption}
+          compact
         />
 
         <div className="space-y-5">
@@ -890,6 +866,7 @@ export async function InnovationAchatsArticle() {
           src={IMAGE2_SRC}
           alt={c.image2Alt}
           caption={c.image2Caption}
+          compact
         />
       </section>
 
@@ -911,6 +888,7 @@ export async function InnovationAchatsArticle() {
           src={IMAGE3_SRC}
           alt={c.image3Alt}
           caption={c.image3Caption}
+          compact
         />
 
         <div className="space-y-4 rounded-2xl border border-white/10 bg-zinc-900/30 p-5 sm:p-6">
@@ -926,6 +904,7 @@ export async function InnovationAchatsArticle() {
           src={IMAGE4_SRC}
           alt={c.image4Alt}
           caption={c.image4Caption}
+          compact
         />
       </section>
 
@@ -990,6 +969,7 @@ export async function InnovationAchatsArticle() {
           src={IMAGE5_SRC}
           alt={c.image5Alt}
           caption={c.image5Caption}
+          compact
         />
       </section>
 
